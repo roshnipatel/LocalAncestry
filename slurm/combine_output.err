@@ -1,0 +1,540 @@
+Building DAG of jobs...
+Building DAG of jobs...
+Building DAG of jobs...
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:54 2019]
+rule combine_output:
+    input: data/chr7/chr7.lai_global.txt, data/chr7.merged.pruned.0.1.2.Q, data/chr7/chr7.pop_map.txt
+    output: data/chr7/chr7.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=7
+
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:54 2019]
+rule combine_output:
+    input: data/chr18/chr18.lai_global.txt, data/chr18.merged.pruned.0.1.2.Q, data/chr18/chr18.pop_map.txt
+    output: data/chr18/chr18.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=18
+
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:54 2019]
+rule combine_output:
+    input: data/chr12/chr12.lai_global.txt, data/chr12.merged.pruned.0.1.2.Q, data/chr12/chr12.pop_map.txt
+    output: data/chr12/chr12.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=12
+
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:54 2019]
+rule combine_output:
+    input: data/chr1/chr1.lai_global.txt, data/chr1.merged.pruned.0.1.2.Q, data/chr1/chr1.pop_map.txt
+    output: data/chr1/chr1.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=1
+
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:54 2019]
+rule combine_output:
+    input: data/chr16/chr16.lai_global.txt, data/chr16.merged.pruned.0.1.2.Q, data/chr16/chr16.pop_map.txt
+    output: data/chr16/chr16.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=16
+
+Building DAG of jobs...
+Building DAG of jobs...
+Building DAG of jobs...
+Building DAG of jobs...
+Building DAG of jobs...
+Building DAG of jobs...
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:57 2019]
+rule combine_output:
+    input: data/chr10/chr10.lai_global.txt, data/chr10.merged.pruned.0.1.2.Q, data/chr10/chr10.pop_map.txt
+    output: data/chr10/chr10.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=10
+
+Building DAG of jobs...
+Building DAG of jobs...
+Building DAG of jobs...
+Building DAG of jobs...
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:57 2019]
+rule combine_output:
+    input: data/chr11/chr11.lai_global.txt, data/chr11.merged.pruned.0.1.2.Q, data/chr11/chr11.pop_map.txt
+    output: data/chr11/chr11.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=11
+
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:57 2019]
+rule combine_output:
+    input: data/chr6/chr6.lai_global.txt, data/chr6.merged.pruned.0.1.2.Q, data/chr6/chr6.pop_map.txt
+    output: data/chr6/chr6.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=6
+
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:57 2019]
+rule combine_output:
+    input: data/chr5/chr5.lai_global.txt, data/chr5.merged.pruned.0.1.2.Q, data/chr5/chr5.pop_map.txt
+    output: data/chr5/chr5.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=5
+
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:57 2019]
+rule combine_output:
+    input: data/chr4/chr4.lai_global.txt, data/chr4.merged.pruned.0.1.2.Q, data/chr4/chr4.pop_map.txt
+    output: data/chr4/chr4.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=4
+
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:57 2019]
+rule combine_output:
+    input: data/chr14/chr14.lai_global.txt, data/chr14.merged.pruned.0.1.2.Q, data/chr14/chr14.pop_map.txt
+    output: data/chr14/chr14.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=14
+
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:57 2019]
+rule combine_output:
+    input: data/chr8/chr8.lai_global.txt, data/chr8.merged.pruned.0.1.2.Q, data/chr8/chr8.pop_map.txt
+    output: data/chr8/chr8.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=8
+
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:57 2019]
+rule combine_output:
+    input: data/chr19/chr19.lai_global.txt, data/chr19.merged.pruned.0.1.2.Q, data/chr19/chr19.pop_map.txt
+    output: data/chr19/chr19.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=19
+
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:57 2019]
+rule combine_output:
+    input: data/chr9/chr9.lai_global.txt, data/chr9.merged.pruned.0.1.2.Q, data/chr9/chr9.pop_map.txt
+    output: data/chr9/chr9.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=9
+
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:57 2019]
+rule combine_output:
+    input: data/chr20/chr20.lai_global.txt, data/chr20.merged.pruned.0.1.2.Q, data/chr20/chr20.pop_map.txt
+    output: data/chr20/chr20.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=20
+
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:57 2019]
+rule combine_output:
+    input: data/chr15/chr15.lai_global.txt, data/chr15.merged.pruned.0.1.2.Q, data/chr15/chr15.pop_map.txt
+    output: data/chr15/chr15.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=15
+
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 21:32:57 2019]
+rule combine_output:
+    input: data/chr17/chr17.lai_global.txt, data/chr17.merged.pruned.0.1.2.Q, data/chr17/chr17.pop_map.txt
+    output: data/chr17/chr17.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=17
+
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.265959'
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.094437'
+Waiting at most 60 seconds for missing files.
+Waiting at most 60 seconds for missing files.
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.123961'
+Waiting at most 60 seconds for missing files.
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.357641'
+Waiting at most 60 seconds for missing files.
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.049192'
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.283078'
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.331641'
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.173396'
+Waiting at most 60 seconds for missing files.
+Waiting at most 60 seconds for missing files.
+Waiting at most 60 seconds for missing files.
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.021022'
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.097022'
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.147804'
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.037247'
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.126489'
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.201497'
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.444626'
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.307051'
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.156840'
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.168381'
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.065972'
+Traceback (most recent call last):
+  File "scripts/combine_ancestry_calls.py", line 30, in <module>
+    frac = [int(x) for x in row[1:]]
+  File "scripts/combine_ancestry_calls.py", line 30, in <listcomp>
+    frac = [int(x) for x in row[1:]]
+ValueError: invalid literal for int() with base 10: '0.113768'
+Waiting at most 60 seconds for missing files.
+Waiting at most 60 seconds for missing files.
+Waiting at most 60 seconds for missing files.
+Waiting at most 60 seconds for missing files.
+Waiting at most 60 seconds for missing files.
+Waiting at most 60 seconds for missing files.
+Waiting at most 60 seconds for missing files.
+Waiting at most 60 seconds for missing files.
+Waiting at most 60 seconds for missing files.
+Waiting at most 60 seconds for missing files.
+Waiting at most 60 seconds for missing files.
+Waiting at most 60 seconds for missing files.
+Waiting at most 60 seconds for missing files.
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr18/chr18.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr7/chr7.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/18.jobfailed’: No such file or directory
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/7.jobfailed’: No such file or directory
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr12/chr12.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/12.jobfailed’: No such file or directory
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr16/chr16.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/16.jobfailed’: No such file or directory
+slurmstepd: error: *** JOB 50555238 ON sh-101-71 CANCELLED AT 2019-09-17T21:34:37 ***
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr2/chr2.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/2.jobfailed’: No such file or directory
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr13/chr13.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/13.jobfailed’: No such file or directory
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr1/chr1.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/1.jobfailed’: No such file or directory
+slurmstepd: error: *** JOB 50555240 ON sh-101-71 CANCELLED AT 2019-09-17T21:34:41 ***
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr10/chr10.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/10.jobfailed’: No such file or directory
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr14/chr14.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/14.jobfailed’: No such file or directory
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr4/chr4.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr9/chr9.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/4.jobfailed’: No such file or directory
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/9.jobfailed’: No such file or directory
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr19/chr19.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr17/chr17.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/19.jobfailed’: No such file or directory
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/17.jobfailed’: No such file or directory
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr6/chr6.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr5/chr5.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/6.jobfailed’: No such file or directory
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/5.jobfailed’: No such file or directory
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr8/chr8.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr20/chr20.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/8.jobfailed’: No such file or directory
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/20.jobfailed’: No such file or directory
+MissingOutputException in line 434 of /oak/stanford/groups/pritch/users/roshni/Snakefile:
+Missing files after 60 seconds:
+data/chr15/chr15.combined_global_anc_frac.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+touch: cannot touch ‘/oak/stanford/groups/pritch/users/roshni/.snakemake/tmp.eqoydvkd/15.jobfailed’: No such file or directory

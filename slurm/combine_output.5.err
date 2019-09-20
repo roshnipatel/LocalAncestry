@@ -1,0 +1,19 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	combine_output
+	1
+
+[Tue Sep 17 22:29:52 2019]
+rule combine_output:
+    input: data/chr5/chr5.lai_global.txt, data/chr5.merged.pruned.0.1.2.Q, data/chr5/chr5.pop_map.txt
+    output: data/chr5/chr5.combined_global_anc_frac.txt
+    jobid: 0
+    wildcards: chr=5
+
+[Tue Sep 17 22:30:08 2019]
+Finished job 0.
+1 of 1 steps (100%) done

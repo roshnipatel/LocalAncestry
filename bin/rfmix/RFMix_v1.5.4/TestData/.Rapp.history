@@ -1,0 +1,88 @@
+snpsPerWindow = read.table("../outputPopPhased.0.SNPsPerWindow.txt", stringsAsFactors=F)[,1]
+snpsPerWindow
+getGenotype = function(row){#
+	row = row[order(row)]#
+	return(paste(row, collapse=""))#
+}#
+#
+solution = read.table(paste("admSolutionChr1.bgl.phased"), stringsAsFactors=F, header=T)#
+solution = solution[, -c(1:2)]#
+numAdm = ncol(solution)/2#
+#
+output = read.table("../outputTrioPhased.0.Viterbi.txt", stringsAsFactors=F)#
+#
+numSnps = nrow(solution)#
+totalLocs = numAdm*numSnps#
+newTotal = 0#
+#
+snpsPerWindow = read.table("../outputPopPhased.0.SNPsPerWindow.txt", stringsAsFactors=F)[,1]#
+outputLong = matrix(nrow=numSnps, ncol=numAdm*2)
+getGenotype = function(row){#
+	row = row[order(row)]#
+	return(paste(row, collapse=""))#
+}#
+#
+solution = read.table(paste("admSolutionChr1.bgl.phased"), stringsAsFactors=F, header=T)#
+solution = solution[, -c(1:2)]#
+numAdm = ncol(solution)/2#
+#
+output = read.table("../outputTrioPhased.0.Viterbi.txt", stringsAsFactors=F)#
+#
+numSnps = nrow(solution)#
+totalLocs = numAdm*numSnps#
+newTotal = 0#
+#
+snpsPerWindow = read.table("../outputTrioPhased.0.SNPsPerWindow.txt", stringsAsFactors=F)[,1]#
+numWindows = length(snpsPerWindow)#
+outputLong = matrix(nrow=numSnps, ncol=numAdm*2)#
+currentSNP = 1
+numSnps
+numWindows
+for(windex in 1:numWindows){#
+	for(snpIndex in 1:snpsPerWindow[windex]){#
+		outputLong[currentSNP,] = output[windex,]#
+		currentSNP = currentSNP + 1#
+	}#
+}
+dim(output)
+length(outputLong[currentSNP, ])
+dim(outputLong)
+outputLong = matrix(NA, nrow=numSnps, ncol=numAdm*2)
+dim(outputLong)
+outputLong = matrix(NA, nrow=numSnps, ncol=numAdm*2)#
+currentSNP = 1#
+for(windex in 1:numWindows){#
+	for(snpIndex in 1:snpsPerWindow[windex]){#
+		outputLong[currentSNP,] = output[windex,]#
+		currentSNP = currentSNP + 1#
+	}#
+}
+outputLong = matrix(NA, nrow=numSnps, ncol=numAdm*2)
+dim(outputLong)
+outputLong[1,]
+length(output[windex,])
+currentSNP
+getGenotype = function(row){#
+	row = row[order(row)]#
+	return(paste(row, collapse=""))#
+}#
+#
+solution = read.table(paste("admSolutionChr1.bgl.phased"), stringsAsFactors=F, header=T)#
+solution = solution[, -c(1:2)]#
+numAdm = ncol(solution)/2#
+#
+output = read.table("../outputTrioPhased.0.Viterbi.txt", stringsAsFactors=F)#
+#
+numSnps = nrow(solution)#
+totalLocs = numAdm*numSnps#
+newTotal = 0#
+#
+snpsPerWindow = read.table("../outputTrioPhased.0.SNPsPerWindow.txt", stringsAsFactors=F)[,1]#
+numWindows = length(snpsPerWindow)#
+outputLong = matrix(NA, nrow=numSnps, ncol=numAdm*2)#
+currentSNP = 1
+windex = 1
+snpIndex=1
+outputLong[currentSNP,] = output[windex,]
+head(outputLong)
+class(output)

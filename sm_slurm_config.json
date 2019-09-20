@@ -1,0 +1,121 @@
+{
+    "__default__" :
+    {
+        "queue"     : "pritch,owners,hns,normal",
+        "nodes"     : 1,
+        "tasks"     : 1,
+        "memory"    : 5000,
+        "time"      : "2:00:00",
+        "name"      : "{rule}",
+        "output"    : "slurm/{rule}.out",
+        "error"     : "slurm/{rule}.err"
+    },
+    "split_mesa" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err"
+    },
+    "filter_1KG" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err"
+    },
+    "merge" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err"
+    },
+    "find_indep_snps" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err",
+    },
+    "prune" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err",
+    },
+    "sort" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err"
+    },
+    "make_rfmix_input" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err"
+    },
+    "make_rfmix_input_acro" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err"
+    },
+    "run_rfmix" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.{wildcards.arm}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.{wildcards.arm}.err",
+        "nodes"     : 2,
+        "time"      : "24:00:00"
+    },
+    "collapse_ancestry" :
+    {
+        "name"      : "{rule}.{wildcards.chr}.{wildcards.em}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.{wildcards.em}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.{wildcards.em}.err"
+    },
+    "plot_karyogram" :
+    {
+        "name"      : "{rule}.{wildcards.ind}.{wildcards.em}",
+        "output"    : "slurm/{rule}.{wildcards.ind}.{wildcards.em}.out",
+        "error"     : "slurm/{rule}.{wildcards.ind}.{wildcards.em}.err"
+    },
+    "concat_vcfs" :
+    {
+        "name"      : "{rule}.{wildcards.chr}.{r2}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.{r2}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.{r2}.err"
+    },
+    "pop_map" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err"
+    },
+    "pos_map" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err"
+    },
+    "run_admixture" :
+    {
+        "nodes"     : 2
+    },
+    "global_inference" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err"
+    },
+    "combine_output" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err"
+    },
+    "admixture_input" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err"
+    }
+}

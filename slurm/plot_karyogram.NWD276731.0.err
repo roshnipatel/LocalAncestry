@@ -1,0 +1,19 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	plot_karyogram
+	1
+
+[Wed Sep 18 15:10:27 2019]
+rule plot_karyogram:
+    input: data/bed/em0.chr1.NWD276731.A.bed, data/bed/em0.chr2.NWD276731.A.bed, data/bed/em0.chr3.NWD276731.A.bed, data/bed/em0.chr4.NWD276731.A.bed, data/bed/em0.chr5.NWD276731.A.bed, data/bed/em0.chr6.NWD276731.A.bed, data/bed/em0.chr7.NWD276731.A.bed, data/bed/em0.chr8.NWD276731.A.bed, data/bed/em0.chr9.NWD276731.A.bed, data/bed/em0.chr10.NWD276731.A.bed, data/bed/em0.chr11.NWD276731.A.bed, data/bed/em0.chr12.NWD276731.A.bed, data/bed/em0.chr13.NWD276731.A.bed, data/bed/em0.chr14.NWD276731.A.bed, data/bed/em0.chr15.NWD276731.A.bed, data/bed/em0.chr16.NWD276731.A.bed, data/bed/em0.chr17.NWD276731.A.bed, data/bed/em0.chr18.NWD276731.A.bed, data/bed/em0.chr19.NWD276731.A.bed, data/bed/em0.chr20.NWD276731.A.bed, data/bed/em0.chr21.NWD276731.A.bed, data/bed/em0.chr22.NWD276731.A.bed, data/bed/em0.chr1.NWD276731.B.bed, data/bed/em0.chr2.NWD276731.B.bed, data/bed/em0.chr3.NWD276731.B.bed, data/bed/em0.chr4.NWD276731.B.bed, data/bed/em0.chr5.NWD276731.B.bed, data/bed/em0.chr6.NWD276731.B.bed, data/bed/em0.chr7.NWD276731.B.bed, data/bed/em0.chr8.NWD276731.B.bed, data/bed/em0.chr9.NWD276731.B.bed, data/bed/em0.chr10.NWD276731.B.bed, data/bed/em0.chr11.NWD276731.B.bed, data/bed/em0.chr12.NWD276731.B.bed, data/bed/em0.chr13.NWD276731.B.bed, data/bed/em0.chr14.NWD276731.B.bed, data/bed/em0.chr15.NWD276731.B.bed, data/bed/em0.chr16.NWD276731.B.bed, data/bed/em0.chr17.NWD276731.B.bed, data/bed/em0.chr18.NWD276731.B.bed, data/bed/em0.chr19.NWD276731.B.bed, data/bed/em0.chr20.NWD276731.B.bed, data/bed/em0.chr21.NWD276731.B.bed, data/bed/em0.chr22.NWD276731.B.bed, data/maps/centromere.map
+    output: plots/NWD276731.em0.png
+    jobid: 0
+    wildcards: ind=NWD276731, em=0
+
+[Wed Sep 18 15:10:36 2019]
+Finished job 0.
+1 of 1 steps (100%) done
