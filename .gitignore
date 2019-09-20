@@ -1,5 +1,11 @@
+# Random hidden files
 .DS_Store
 .snakemake/
-bin/admixture
 ._.DS_Store
 ._Snakefile
+
+# symlink to ADMIXTURE binary
+bin/admixture
+
+# Temp directory
+temp
