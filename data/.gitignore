@@ -1,4 +1,4 @@
+# Ignore everything, except this file and map directory
 *
-*/
 !.gitignore
 !maps/*

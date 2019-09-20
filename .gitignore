@@ -5,7 +5,7 @@
 .snakemake/
 
 # Ignore shadow hidden files made for every file
-[a-z]*/._*
+scripts/._*
 ._*
 
 # Ignore symlink to ADMIXTURE binary
