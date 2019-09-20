@@ -16,6 +16,3 @@ temp/
 
 # Ignore file made by R while plotting
 Rplots.pdf
-
-# Ignore bin directory (containing RFMix and ADMIXTURE)
-bin/
