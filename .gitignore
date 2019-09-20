@@ -1,11 +1,16 @@
-# Random hidden files
+# Ignore Mac hidden files
 .DS_Store
-.snakemake/
 ._.DS_Store
+
+# Ignore Snakemake hidden files
+.snakemake/
 ._Snakefile
 
-# symlink to ADMIXTURE binary
+# Ignore symlink to ADMIXTURE binary
 bin/admixture
 
-# Temp directory
-temp
+# Ignore temp directory
+temp/
+
+# Ignore file made by R while plotting
+Rplots.pdf
