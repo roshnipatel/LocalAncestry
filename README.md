@@ -3,10 +3,10 @@
 ## Description
 Calling local ancestry tracts with RFMix v1.5.4 and (optionally) validating global ancestry fractions with ADMIXTURE.
 
-## A note on NCBI build
+### NCBI build
 This pipeline was designed to call local ancestry tracts on hg38 VCFs. In practice, it can be used to call local ancestry tracts on hg37 VCFs, but you will need to obtain hg37 versions of the files in `maps/` (e.g. [here](https://github.com/armartin/ancestry_pipeline)).
 
-## Cluster
+### Cluster
 This pipeline is designed to be run on a cluster that uses the Slurm workload manager. If this is not the case, `sm_script.sh` and `sm_slurm_config.json` will need to be reworked.
 
 ## Required files
