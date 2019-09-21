@@ -4,3 +4,5 @@
 # Ignore temporary/unnecessary scripts
 convert_centromere.py
 pos_map.py
+plot_ancestry_frac.R
+correlate_rfmix_admixture.R
