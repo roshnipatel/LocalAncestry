@@ -1,0 +1,19 @@
+name: plink-env
+channels:
+  - bioconda
+  - defaults
+dependencies:
+  - _libgcc_mutex=0.1=main
+  - blas=1.0=openblas
+  - libgcc=7.2.0=h69d50b8_2
+  - libgcc-ng=9.1.0=hdf63c60_0
+  - libgfortran-ng=7.3.0=hdf63c60_0
+  - libopenblas=0.3.6=h5a2b251_1
+  - libstdcxx-ng=9.1.0=hdf63c60_0
+  - nomkl=3.0=0
+  - openblas=0.3.6=1
+  - openblas-devel=0.3.6=1
+  - plink=1.90b4=1
+  - zlib=1.2.11=h7b6447c_3
+prefix: /home/users/rpatel7/miniconda3/envs/plink-env
+
