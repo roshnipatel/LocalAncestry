@@ -6,18 +6,9 @@ include: "scripts/snakemake_variables.py"
 shell.executable("/usr/bin/bash")
 shell.prefix("source ~/.bashrc; ")
 
-# Decide whether to validate local ancestry calls by comparing to ADMIXTURE
-validate_admixture = True
-make_karyograms
-
-if validate_admixture:
-    rule all:
-        input:
-            expand(DATA_DIR + "chr{chr}/chr{chr}.combined_global_anc_frac.txt", chr=CHROMS)
-else:
-    rule all:
-        input:
-            expand(DATA_DIR + "chr{chr}/chr{chr}.lai_global.txt", chr=CHROMS)
+rule all:
+    input:
+        expand(DATA_DIR + "chr{chr}/chr{chr}.combined_global_anc_frac.txt", chr=CHROMS)
 
 rule create_admix_filter:
     input:
@@ -37,11 +28,11 @@ rule create_admix_filter:
 
 rule filter_admix:
     input:
-        dataset=DATA_DIR + ADMIX_DATA + ".vcf.gz",
+        dataset=DATA_DIR + ADMIX_DATA,
         filter=rules.create_admix_filter.output
     output:
-        bcf=temp(DATA_DIR + ADMIX_DATA + ".filter_admix.bcf.gz"),
-        idx=temp(DATA_DIR + ADMIX_DATA + ".filter_admix.bcf.gz.csi")
+        bcf=temp(DATA_DIR + ".admix.filtered.bcf.gz"),
+        idx=temp(DATA_DIR + ".admix.filtered.bcf.gz.csi")
     shell:
         """
         conda activate bcftools-env
@@ -52,31 +43,31 @@ rule filter_admix:
         conda deactivate
         """
 
-# Renames MESA dataset for consistency with 1KG dataset.
-rule annotate_admix:
-    input:
-        bcf=rules.filter_admix.output.bcf,
-        idx=rules.filter_admix.output.idx,
-        map=DATA_DIR + "chr_map.txt"
-    output:
-        bcf=temp(DATA_DIR + ADMIX_DATA + ".filter_admix.anno.bcf.gz"),
-        idx=temp(DATA_DIR + ADMIX_DATA + ".filter_admix.anno.bcf.gz.csi")
-    shell:
-        """
-        conda activate bcftools-env
-        bcftools annotate --rename-chrs {input.map} -Ob -o {output.bcf} \
-            {input.bcf}
-        bcftools index -c {output.bcf}
-        conda deactivate
-        """
+# # Renames MESA dataset for consistency with 1KG dataset.
+# rule annotate_admix:
+#     input:
+#         bcf=rules.filter_admix.output.bcf,
+#         idx=rules.filter_admix.output.idx,
+#         map=DATA_DIR + "chr_map.txt"
+#     output:
+#         bcf=temp(DATA_DIR + ADMIX_DATA + ".filter_admix.anno.bcf.gz"),
+#         idx=temp(DATA_DIR + ADMIX_DATA + ".filter_admix.anno.bcf.gz.csi")
+#     shell:
+#         """
+#         conda activate bcftools-env
+#         bcftools annotate --rename-chrs {input.map} -Ob -o {output.bcf} \
+#             {input.bcf}
+#         bcftools index -c {output.bcf}
+#         conda deactivate
+#         """
 
 rule split_admix:
     input:
-        bcf=rules.annotate_admix.output.bcf,
-        idx=rules.annotate_admix.output.idx
+        bcf=rules.filter_admix.output.bcf,
+        idx=rules.filter_admix.output.idx
     output:
-        bcf=DATA_DIR + "chr{chr}/chr{chr}." + ADMIX_DATA + ".filter_admix.anno.bcf.gz",
-        idx=DATA_DIR + "chr{chr}/chr{chr}." + ADMIX_DATA + ".filter_admix.anno.bcf.gz.csi"
+        bcf=DATA_DIR + "chr{chr}/chr{chr}." + ".admix.filtered.bcf.gz",
+        idx=DATA_DIR + "chr{chr}/chr{chr}." + ".admix.filtered.bcf.gz.csi"
     params:
         out_dir=DATA_DIR + "chr{chr}"
     shell:
@@ -106,11 +97,11 @@ rule create_ref_filter:
 
 rule filter_ref:
     input:
-        ref=REF_DIR + "chr{chr}/chr{chr}." + REF_DATA + ".vcf.gz",
+        ref=REF_DIR + "chr{chr}/chr{chr}." + REF_DATA,
         filter=rules.create_ref_filter.output
     output:
-        bcf=DATA_DIR + "chr{chr}/chr{chr}." + REF_DATA + ".bcf.gz",
-        idx=DATA_DIR + "chr{chr}/chr{chr}." + REF_DATA + ".bcf.gz.csi"
+        bcf=DATA_DIR + "chr{chr}/chr{chr}." + "reference.bcf.gz",
+        idx=DATA_DIR + "chr{chr}/chr{chr}." + "reference.bcf.gz.csi"
     params:
         out_dir=DATA_DIR + "chr{chr}"
     shell:
@@ -164,7 +155,7 @@ rule find_indep_snps:
     input:
         rules.merge.output
     output:
-        keep=DATA_DIR + "chr{chr}/chr{chr}.{r2}.prune.in",
+        keep=temp(DATA_DIR + "chr{chr}/chr{chr}.{r2}.prune.in"),
         exclude=temp(expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.{{r2}}.{ext}", ext=["log", "nosex", "prune.out"]))
     params:
         out_file=DATA_DIR + "chr{chr}/chr{chr}.{r2}"
@@ -179,7 +170,7 @@ rule find_indep_snps:
 rule prune:
     input:
         vcf=rules.merge.output,
-        snps=DATA_DIR + "chr{chr}/chr{chr}.{r2}.prune.in"
+        snps=rules.find_indep_snps.output.keep
     output:
         DATA_DIR + "chr{chr}/chr{chr}.merged.pruned.{r2}.vcf.gz"
     shell:
@@ -194,8 +185,7 @@ rule make_rfmix_input_acro:
         vcf=DATA_DIR + "chr{chr}/chr{chr}.merged.pruned.0.5.vcf.gz",
         admix_info=DATA_DIR + ADMIX_METADATA,
         ref_info=REF_DIR + REF_METADATA,
-        genetic_map=MAP_DIR + "plink.chr{chr}.GRCh38.map",
-        centromeres=MAP_DIR + "centromeres.tsv"
+        genetic_map=MAP_DIR + "plink.chr{chr}.GRCh38.map"
     output:
         snp_locations=temp(DATA_DIR + "chr{chr}/chr{chr}.snp_locations.q.txt"),
         classes=temp(DATA_DIR + "chr{chr}/chr{chr}.classes.txt"),
@@ -229,7 +219,7 @@ rule make_rfmix_input:
         admix_info=DATA_DIR + ADMIX_METADATA,
         ref_info=REF_DIR + REF_METADATA,
         genetic_map=MAP_DIR + "plink.chr{chr}.GRCh38.map",
-        centromeres=MAP_DIR + "centromeres.tsv"
+        centromeres=MAP_DIR + "chrom_centromere.map"
     output:
         snp_locations=temp(expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.snp_locations.{arm}.txt", arm=ARMS)),
         classes=temp(DATA_DIR + "chr{chr}/chr{chr}.classes.txt"),
@@ -243,7 +233,7 @@ rule make_rfmix_input:
     shell:
         """
         conda activate py36
-        CENT=$(grep 'CEN{wildcards.chr}[^0-9]' {input.centromeres} | cut -f3)
+        CENT=$(grep '^{wildcards.chr}[^0-9]' {input.centromeres} | cut -f3 -d$'\t')
         zcat {input.vcf} | python {RFMIX_INPUT_SCRIPT} \
             --admix {input.admix_info} \
             --admix_pop_col {ADMIX_POP_COL} \
@@ -260,10 +250,10 @@ rule make_rfmix_input:
 rule run_rfmix:
     input:
         snp_locations=DATA_DIR + "chr{chr}/chr{chr}.snp_locations.{arm}.txt",
-        classes=rules.make_rfmix_input.output.classes,
+        classes=DATA_DIR + "chr{chr}/chr{chr}.classes.txt",
         alleles=DATA_DIR + "chr{chr}/chr{chr}.alleles.{arm}.txt"
     output:
-        temp(expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.{{arm}}.{em}.Viterbi.txt", em=EM_ITER))
+        temp(expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.{{arm}}.em{em}.Viterbi.txt", em=EM_ITER))
     params:
         out_file=DATA_DIR + "chr{chr}/chr{chr}.{arm}"
     shell:
@@ -292,9 +282,9 @@ rule merge_rfmix_output:
             if wildcards.chr not in ACROCENTRIC else \
             DATA_DIR + "chr{chr}/chr{chr}.pos_map.q.txt",
     output:
-        viterbi=DATA_DIR + "chr{chr}/chr{chr}.{em}.Viterbi.merged.txt",
-        snp_locations=DATA_DIR + "chr{chr}/chr{chr}.{em}.snp_locations.merged.txt",
-        pos_map=DATA_DIR + "chr{chr}/chr{chr}.{em}.pos_map.merged.txt"
+        viterbi=DATA_DIR + "chr{chr}/chr{chr}.em{em}.Viterbi.merged.txt",
+        snp_locations=DATA_DIR + "chr{chr}/chr{chr}.em{em}.snp_locations.merged.txt",
+        pos_map=DATA_DIR + "chr{chr}/chr{chr}.em{em}.pos_map.merged.txt"
     shell:
         """
         cat {input.viterbi} > {output.viterbi}
@@ -305,8 +295,8 @@ rule merge_rfmix_output:
 rule collapse_ancestry:
     input:
         viterbi=rules.merge_rfmix_output.output.viterbi,
-        pos_map=DATA_DIR + "chr{chr}/chr{chr}.0.pos_map.merged.txt",
-        pop_map=DATA_DIR + "chr{chr}/chr{chr}.pop_map.txt"
+        pos_map=rules.merge_rfmix_output.output.pos_map,
+        pop_map=rules.make_rfmix_input.output.pop_map
     output:
         bed=expand(DATA_DIR + "bed/em{{em}}.chr{{chr}}.{ind}.{hapl}.bed", hapl=HAPL, ind=INDIV),
     params:
@@ -328,9 +318,9 @@ rule collapse_ancestry:
 
 rule global_inference:
     input:
-        bed=expand(DATA_DIR + "bed/em{em}.chr{{chr}}.{ind}.{hapl}.bed", ind=INDIV, hapl=HAPL, em=EM_ITER)
+        bed=expand(DATA_DIR + "bed/em{{em}}.chr{{chr}}.{ind}.{hapl}.bed", ind=INDIV, hapl=HAPL)
     output:
-        DATA_DIR + "chr{chr}/chr{chr}.lai_global.txt"
+        DATA_DIR + "chr{chr}/chr{chr}.em{em}.lai_global.txt"
     params:
         ind=" ".join(INDIV)
     shell:
@@ -347,7 +337,7 @@ rule global_inference:
 rule plot_karyogram:
     input:
         bed=expand(DATA_DIR + "bed/em{{em}}.chr{chr}.{{ind}}.{hapl}.bed", hapl=HAPL, chr=CHROMS),
-        cent=MAP_DIR + "centromere.map"
+        cent=MAP_DIR + "centromere.tsv"
     output:
         "plots/{ind}.em{em}.png"
     shell:
@@ -365,10 +355,11 @@ rule plot_karyogram:
 
 rule admixture_input:
     input:
-        vcf=rules.prune.output,
-        map=ancient(DATA_DIR + "chr{chr}/chr{chr}.pop_map.txt")
+        vcf=DATA_DIR + "chr{chr}/chr{chr}.merged.pruned.{r2}.vcf.gz",
+        map=rules.make_rfmix_input.output.pop_map
     output:
-        plink=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.pruned.{{r2}}.{ext}", ext=["bed", "bim", "fam"]),
+        bed=DATA_DIR + "chr{chr}/chr{chr}.merged.pruned.{r2}.bed"
+        misc=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.pruned.{{r2}}.{ext}", ext=["bim", "fam"]),
         discard=temp(expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.pruned.{{r2}}.{ext}", ext=["log", "nosex"])),
         pop=DATA_DIR + "chr{chr}/chr{chr}.merged.pruned.{r2}.pop"
     params:
@@ -384,22 +375,23 @@ rule admixture_input:
 rule run_admixture:
     input:
         bed=DATA_DIR + "chr{chr}/chr{chr}.merged.pruned.0.1.bed",
-        misc=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.pruned.0.1.{ext}", ext=["pop", "bim", "fam"])
+        misc=rules.admixture_input.output.misc,
+        pop=rules.admixture_input.output.pop
     output:
         expand(DATA_DIR + "chr{{chr}}.merged.pruned.0.1.{n}.{ext}", ext=['P', 'Q'], n=NPOP)
     shell:
         """
         {ADMIXTURE} {input.bed} 2 --supervised
-        mv chr* {DATA_DIR}
+        mv chr{wildcards.chr}* {DATA_DIR}chr{wildcards.chr}/
         """
 
 rule combine_rfmix_admixture:
     input:
         rfmix=rules.global_inference.output,
         admix=expand(DATA_DIR + "chr{{chr}}.merged.pruned.0.1.{n}.Q", n=NPOP),
-        map=DATA_DIR + "chr{chr}/chr{chr}.pop_map.txt"
+        map=rules.make_rfmix_input.output.pop_map
     output:
-        DATA_DIR + "chr{chr}/chr{chr}.combined_global_anc_frac.txt"
+        temp(DATA_DIR + "chr{chr}/chr{chr}.combined_global_anc_frac.txt")
     shell:
         """
         conda activate py36
@@ -408,6 +400,22 @@ rule combine_rfmix_admixture:
             --admix {input.admix} \
             --map {input.map} \
             --pops {REF_POP_VAL} \
+            --out {output}
+        conda deactivate
+        """
+
+rule combine_chrs:
+    input:
+        anc=expand(rules.combine_rfmix_admixture.output, chr=CHROMS),
+        map=MAP_DIR + "chrom_centromere.map"
+    output:
+        DATA_DIR + "combined_global_anc_frac.txt"
+    shell:
+        """
+        conda activate py36
+        python {COMB_CHR_SCRIPT} \
+            --anc_frac {input.anc} \
+            --map {input.map} \
             --out {output}
         conda deactivate
         """

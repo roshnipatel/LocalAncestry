@@ -156,11 +156,15 @@ color_list = args.colors.split(',')
 # Define centromeres
 centro = open(args.centromeres)
 centromeres = {}
+first_line = True
 for line in centro:
-    line = line.strip().split(',')
+    if first_line:
+        first_line = False
+        continue
+    line = line.strip().split('\t')
     if chrX and line[0] == 'X':
         line[0] = '23'
-    centromeres[line[0]] = [float(n) for n in line[1:]]
+    centromeres[line[0]] = [float(n) for n in line[5:]]
 
 # Plot rectangles
 for filepath in args.bed_path:

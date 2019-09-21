@@ -18,8 +18,8 @@ MAP_DIR = "data/maps/"
 ### Data ###
 
 # Basename of phased VCF for admixed and reference data
-ADMIX_DATA = "mesa.1331samples.genotypes.pass.phased.maf01"
-REF_DATA = "GRCh38.filt.1kg.phase3.v5a.biSNPs"
+ADMIX_DATA = "mesa.1331samples.genotypes.pass.phased.maf01.vcf.gz"
+REF_DATA = "GRCh38.filt.1kg.phase3.v5a.biSNPs.vcf.gz"
 
 # Files containing metadata for admixed and reference data. Must be .csv, and
 # first column should be sample ID in VCF.
@@ -58,6 +58,9 @@ GLOBAL_INF_SCRIPT = "scripts/lai_global.py"
 # Script for combining ancestry calls between RFMix and ADMIXTURE for each
 # individual
 COMB_SCRIPT = "scripts/combine_ancestry_calls.py"
+
+# Script for combining global ancestry estimates across chromosomes
+COMB_CHR_SCRIPT = "scripts/combine_chrs.py"
 
 ### Programs ###
 
