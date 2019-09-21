@@ -1,4 +1,4 @@
-# Run RFMix v1.5.4 on MESA dataset (build 38)
+# Run RFMix v1.5.4 and optionally ADMIXTURE
 
 # Variables and filepaths stored here
 include: "scripts/snakemake_variables.py"
@@ -8,7 +8,7 @@ shell.prefix("source ~/.bashrc; ")
 
 rule all:
     input:
-        expand(DATA_DIR + "chr{chr}/chr{chr}.combined_global_anc_frac.txt", chr=CHROMS)
+        DATA_DIR + "combined_global_anc_frac.txt"
 
 rule create_admix_filter:
     input:
