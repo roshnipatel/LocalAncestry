@@ -9,15 +9,15 @@ from genetic_map import map_positions
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--admix', help='path to admixed sample data. requirements: file is csv, first column is indiv. sample ID.', required=True)
-parser.add_argument('--admix_pop_col', help='name of column that specifies ancestry in admixed sample data', required=True)
-parser.add_argument('--admix_pop_val', help='comma-delimited values of ancestry column in admixed data to filter for', required=True)
-parser.add_argument('--ref', help='path to reference sample data csv. requirements: file is csv, first column is indiv. sample ID.', required=True)
-parser.add_argument('--ref_pop_col', help='name of column that specifies ancestry in reference sample data', required=True)
-parser.add_argument('--ref_pop_val', help='comma-delimited values of ancestry column in reference data to filter for', required=True)
-parser.add_argument('--genetic_map', help='path to map from genetic positions to chromosomal coordinates', required=True)
-parser.add_argument('--out', help='prefix for output files', required=True)
-parser.add_argument('--cent', help='starting position of centromere', required=True)
+parser.add_argument('--admix', help='Path to admixed sample metadata. Requirements: file is csv, first column is indiv. sample ID.', required=True)
+parser.add_argument('--admix_pop_col', help='Name of column that specifies race/ancestry in admixed sample metadata.', required=True)
+parser.add_argument('--admix_pop_val', help='Comma-delimited values of race/ancestry column to filter for.', required=True)
+parser.add_argument('--ref', help='Path to reference sample metadata. Requirements: file is csv, first column is indiv. sample ID.', required=True)
+parser.add_argument('--ref_pop_col', help='Name of column that specifies race/ancestry in reference sample metadata.', required=True)
+parser.add_argument('--ref_pop_val', help='Comma-delimited values of race/ancestry column in reference data to filter for.', required=True)
+parser.add_argument('--genetic_map', help='Path to map from genetic positions to chromosomal coordinates.', required=True)
+parser.add_argument('--out', help='Prefix for output files.', required=True)
+parser.add_argument('--cent', help='Starting position of centromere for chromosome being processed.', required=True)
 args = parser.parse_args()
 
 admix_pop_val = args.admix_pop_val.split(',')
@@ -41,7 +41,7 @@ with open(args.out + ".alleles.p.txt", 'w') as p_file, open(args.out + ".alleles
             genotypes = line[9:]
             genotypes = "".join(genotypes).translate({ord('|'): ''})
             pos = int(line[1])
-            if pos < cent_pos:
+            if pos < cent_pos: # Determine which arm of chromosome SNP is located on
                 p_file.write(genotypes + "\n")
                 p_pos.append(pos)
             else:
@@ -61,7 +61,8 @@ with open(args.out + ".pos_map.q.txt", "w") as f:
     f.write("\t".join([str(p) for p in q_pos]))
     f.write("\n")
     f.write("\t".join([str(p) for p in q_gen_pos]))
-if p_pos:
+
+if p_pos: # Chromosome is not acrocentric, and both arms can be analyzed in parallel
     p_gen_pos = map_positions(genetic_map, p_pos)
     with open(args.out + ".snp_locations.p.txt", 'w') as snp_loc:
         for gp in p_gen_pos:
@@ -71,12 +72,11 @@ if p_pos:
         f.write("\t".join([str(p) for p in p_pos]))
         f.write("\n")
         f.write("\t".join([str(p) for p in p_gen_pos]))
-else:
-    os.remove(args.out + ".alleles.p.txt") # Only generate one output file for acrocentric chromosomes
+else: # Chromosome is acrocentric, and we only generate one set of output files
+    os.remove(args.out + ".alleles.p.txt")
 
 # Create classes file (space-delimited file that designates ancestry of every
-# haplotype). Also write a map from sample IDs to ancestry to RFMix ancestry code.
-
+# haplotype). Also write a map from sample IDs to ancestry.
 sample_anc_map = {}
 
 anc_ID_map = {k: v + 1 for v, k in enumerate(ref_pop_val)}

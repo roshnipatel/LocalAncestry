@@ -1,8 +1,7 @@
 #!/usr/bin/bash
 
-# Prefer to run this in an interactive session so
-# can see the jobs running and when they fail
-# Don't really see a reason to run it as sbatch
+# Prefer to run this in an interactive session so you can see the jobs running
+# and when they fail - don't really see a reason to run it as sbatch
 
 snakemake --rerun-incomplete --keep-going -j 20 \
         --latency-wait 60 --wait-for-files \

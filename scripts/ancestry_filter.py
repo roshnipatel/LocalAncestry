@@ -1,5 +1,6 @@
 """
-Reads sample metadata to identify sample IDs corresponding to the specified ancestry.
+Reads sample metadata to identify individual sample IDs corresponding to the
+specified ancestry.
 """
 
 import sys, csv
@@ -8,7 +9,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--sample_data', help='Path to sample metadata. Requirements: file is csv, first column is indiv. sample ID in VCF.', required=True)
-parser.add_argument('--pop_col', help='Name of column that specifies race/ancestry in admixed sample data.', required=True)
+parser.add_argument('--pop_col', help='Name of column that specifies race/ancestry in sample metadata.', required=True)
 parser.add_argument('--pop_val', help='Comma-delimited values of race/ancestry column to filter for.', required=True)
 parser.add_argument('--out', help='Filepath of output file.', required=True)
 args = parser.parse_args()

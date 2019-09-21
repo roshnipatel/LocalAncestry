@@ -1,13 +1,17 @@
-__author__ = 'armartin'
+"""
+Estimates global ancestry proportion from local ancestry tracts.
+
+Modified lightly from Alicia Martin (armartin via GitHub).
+"""
+
 import argparse
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--bed', help='list of bed files.', nargs='+')
-parser.add_argument('--ind', help='list of individual IDs.', nargs='+')
-parser.add_argument('--pops', default='AFR,EUR,NAT,UNK',
-                  help='comma-separated list of population labels in the order of rfmix populations (1 first, 2 second, and so on). Used in bed files and karyogram labels')
-parser.add_argument('--out')
+parser.add_argument('--bed', help='List of bed files.', nargs='+', required=True)
+parser.add_argument('--ind', help='List of individual sample IDs for which to generate global ancestry estimates.', nargs='+', required=True)
+parser.add_argument('--pops', default='EUR,AFR', help='Comma-separated list of population labels in the order of rfmix populations (1 first, 2 second, and so on). Used in bed files and karyogram labels', required=True)
+parser.add_argument('--out', help='Filepath for output', required=True)
 
 args = parser.parse_args()
 out = open(args.out, 'w')
@@ -15,6 +19,7 @@ pops = args.pops.strip().split(',')
 out.write('ID\t' + '\t'.join(pops) + '\n')
 lai_props = [0]*len(pops)
 
+# Extract individual sample ID from bed filepath
 def extract_ID(filename):
     s = filename.split(".")
     ID = s[2]

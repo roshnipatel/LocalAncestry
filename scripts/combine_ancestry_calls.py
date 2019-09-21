@@ -67,6 +67,6 @@ else:
     admix['ID'] = list(zip(*sorted(list(zip(pops, order)), key=lambda x:x[1])))[0]
     admix = pd.DataFrame(admix).set_index('ID').T
 
-# Merge data by sample IDs and write to file
+# Merge data by individual sample IDs and write to file
 comb = pd.merge(admix, rfmix, left_index=True, right_index=True, suffixes=('_admixture', '_rfmix'))
 comb.to_csv(args.out, sep='\t')
