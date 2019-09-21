@@ -1,5 +1,9 @@
-__author__ = 'armartin'
-#takes in RFMix output and creates collapsed 2 haploid bed files per individual
+"""
+Takes in RFMix Viterbi output and generates ancestry tracts for each haplotype
+of each individual specified in input.
+
+Modified lightly from Alicia Martin (armartin via GitHub).
+"""
 
 from datetime import datetime
 import time
@@ -10,16 +14,15 @@ import re
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--rfmix', help='path to RFMix Viterbi output, chr expected in filename', required=True)
-    parser.add_argument('--snp_map', help='headerless, 2-row file with 1 column per SNP: bp, cM', required=True)
+    parser.add_argument('--rfmix', help='Path to RFMix Viterbi output, chr expected in filename.', required=True)
+    parser.add_argument('--snp_map', help='Headerless, 2-row file with 1 column per SNP: bp, cM. Should only contain SNPs that RFMix was run with, and SNPs should be in same order as RFMix input.', required=True)
     parser.add_argument('--fbk', default=None)
     parser.add_argument('--fbk_threshold', type=float, default = 0.9)
-    parser.add_argument('--ind', help='space-delimited list of individual sample IDs', required=True, nargs='+')
-    parser.add_argument('--pop_map', help='path to file mapping Individual IDs to ancestries', required=True)
-    parser.add_argument('--pop_labels', default='ASN,EUR,AFR',
-                    help='comma-separated list of population labels in the order of rfmix populations (1 first, 2 second, and so on). Used in bed files and karyogram labels')
-    parser.add_argument('--out', help='prefix to bed file, .{sample_ID}.A.bed and .{sample_ID}.B.bed will be appended', required=True)
-    parser.add_argument('--chr', help='chromosome to process (should be an integer)', default='', required=False)
+    parser.add_argument('--ind', help='Space-delimited list of individual sample IDs to generate output files for.', required=True, nargs='+')
+    parser.add_argument('--pop_map', help='Headerless, 2-row file with 1 column per individual: sample ID, race/ancestry classification. Individuals should be in same order as RFMix input.', required=True)
+    parser.add_argument('--pop_labels', default='CEU,YRI', help='Comma-delimited list of population labels in the order of rfmix populations (1 first, 2 second, and so on). Used in bed files and karyogram labels.')
+    parser.add_argument('--out', help='Prefix to bed file. .{sample_ID}.A.bed and .{sample_ID}.B.bed will be appended.', required=True)
+    parser.add_argument('--chr', help='Chromosome to process (should be an integer).', required=True)
 
     args = parser.parse_args()
     return(args)
@@ -69,19 +72,19 @@ def find_haplotype_bounds(index, add, pop_order, hap, npop, chr):
                 fbk_max.append(max(i))
             if fbk_max[index*2+add] < args.fbk_threshold:
                 rfmix_viterbi[index*2+add] = -9
-        #fencepost for start of the chromosome
+        # Fencepost for start of the chromosome
         if counter == 1:
             last_anc_pos_cm = [rfmix_viterbi[2*index + add], cur_gpos, cur_pos]
             post_anc_pos_cm = [rfmix_viterbi[2*index + add], cur_gpos, cur_pos]
             continue
 
-        #start regular iterations
+        # Start regular iterations
         current_anc_pos_cm = [rfmix_viterbi[2*index + add], cur_gpos, cur_pos]
         if current_anc_pos_cm[0] == last_anc_pos_cm[0]:
             last_anc_pos_cm = current_anc_pos_cm
             continue
         else:
-            #we've reached the end of a region. Need to print.
+            # We've reached the end of a region. Need to print.
             if last_anc_pos_cm[0] == -9:
                 hap.write(str(chr) + '\t' + post_anc_pos_cm[1] + '\t' + last_anc_pos_cm[1] +
                         '\tUNK\t' + post_anc_pos_cm[2] + '\t' + last_anc_pos_cm[2] + '\n')
@@ -93,7 +96,7 @@ def find_haplotype_bounds(index, add, pop_order, hap, npop, chr):
 
         last_anc_pos_cm = current_anc_pos_cm
 
-    #last iteration, still need to print
+    # Last iteration, still need to print
     if last_anc_pos_cm[0] == -9:
         hap.write(str(chr) + '\t' + post_anc_pos_cm[1] + '\t' + current_anc_pos_cm[1] +
             '\tUNK\t' + post_anc_pos_cm[2] + '\t' + current_anc_pos_cm[2] + '\n')
@@ -103,8 +106,7 @@ def find_haplotype_bounds(index, add, pop_order, hap, npop, chr):
             post_anc_pos_cm[2] + '\t' + current_anc_pos_cm[2] + '\n')
 
 def main(current_ind, index, pop_order, chr):
-
-    #open bed files (2 haplotypes per individual)
+    # Open bed files (2 haplotypes per individual)
     hap_a = open(args.out + '.' + current_ind + '.A.bed', 'w')
     hap_b = open(args.out + '.' + current_ind + '.B.bed', 'w')
 
@@ -115,14 +117,18 @@ def main(current_ind, index, pop_order, chr):
     hap_b.close()
 
 if __name__ == '__main__':
-    #load parameters and files
+    # Load parameters and files
     args = parse_args()
     pop_labels = args.pop_labels.split(',')
     npop = len(pop_labels)
     chr = int(args.chr)
+
+    # Determine ordering of individuals in RFMix input
     ind_order = open(args.pop_map).readline().strip().split('\t')
+
+    # Generate ancestry tract files for each individual specified in command-line argument
     for i in args.ind:
-        idx = ind_order.index(i) # Grab index of current individual
+        idx = ind_order.index(i) # Grab index of current individual in RFMix input
         print 'Starting [' + datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + ']'
         main(i, idx, pop_labels, chr)
         print 'Finished [' + datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + ']'

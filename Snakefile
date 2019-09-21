@@ -8,11 +8,16 @@ shell.prefix("source ~/.bashrc; ")
 
 # Decide whether to validate local ancestry calls by comparing to ADMIXTURE
 validate_admixture = True
+make_karyograms
 
 if validate_admixture:
     rule all:
         input:
-            expand("plots/{ind}.em0.png", ind=INDIV[:10])
+            expand(DATA_DIR + "chr{chr}/chr{chr}.combined_global_anc_frac.txt", chr=CHROMS)
+else:
+    rule all:
+        input:
+            expand(DATA_DIR + "chr{chr}/chr{chr}.lai_global.txt", chr=CHROMS)
 
 rule create_admix_filter:
     input:
@@ -47,7 +52,7 @@ rule filter_admix:
         conda deactivate
         """
 
-# Renames MESA chromosomes for consistency with 1KG dataset.
+# Renames MESA dataset for consistency with 1KG dataset.
 rule annotate_admix:
     input:
         bcf=rules.filter_admix.output.bcf,
@@ -71,7 +76,7 @@ rule split_admix:
         idx=rules.annotate_admix.output.idx
     output:
         bcf=DATA_DIR + "chr{chr}/chr{chr}." + ADMIX_DATA + ".filter_admix.anno.bcf.gz",
-        idx=DATA_DIR + "chr{chr}/chr{chr}." + ADMIX_DATA + ".filter_admix.anno.bcf.gz.csi",
+        idx=DATA_DIR + "chr{chr}/chr{chr}." + ADMIX_DATA + ".filter_admix.anno.bcf.gz.csi"
     params:
         out_dir=DATA_DIR + "chr{chr}"
     shell:
@@ -296,45 +301,6 @@ rule merge_rfmix_output:
         cat {input.snp_locations} > {output.snp_locations}
         cat {input.pos_map} > {output.pos_map}
         """
-
-# rule pos_map:
-#     input:
-#         vcf=DATA_DIR + "chr{chr}/chr{chr}.merged.pruned.0.5.vcf.gz",
-#         genetic_map=MAP_DIR + "plink.chr{chr}.GRCh38.map"
-#     output:
-#         DATA_DIR + "chr{chr}/chr{chr}.{em}.pos_map.merged.txt"
-#     params:
-#         out_file="data/chr{chr}/chr{chr}"
-#     shell:
-#         """
-#         conda activate py36
-#         zcat {input.vcf} | python scripts/pos_map.py \
-#             --genetic_map {input.genetic_map} \
-#             --out {params.out_file}
-#         conda deactivate
-#         """
-
-# rule pop_map:
-#     input:
-#         admix_info=DATA_DIR + ADMIX_METADATA,
-#         ref_info=REF_DIR + REF_METADATA,
-#         samp=DATA_DIR + "chr{chr}/chr{chr}.merged.pruned.0.5.vcf.gz"
-#     output:
-#         DATA_DIR + "chr{chr}/chr{chr}.pop_map.txt"
-#     shell:
-#         """
-#         conda activate py36
-#         python {POP_SCRIPT} \
-#             --samples $(zgrep -m 1 '#CHROM' {input.samp} | cut -d$'\t' --complement -f1-9 | sed 's/\t/ /g') \
-#             --admix {input.admix_info} \
-#             --admix_pop_col {ADMIX_POP_COL} \
-#             --admix_pop_val {ADMIX_POP_VAL} \
-#             --ref {input.ref_info} \
-#             --ref_pop_col {REF_POP_COL} \
-#             --ref_pop_val {REF_POP_VAL} \
-#             --out {output}
-#         conda deactivate
-#         """
 
 rule collapse_ancestry:
     input:

@@ -2,6 +2,9 @@ def interpolate(x1, x2, y1, y2, x):
     return y2 + (x - x2) * (y2 - y1) / (x2 - x1)
 
 def map_positions(map, positions):
+    """
+    Iterate through genetic positions and interpolate coordinates in cM.
+    """
     genetic_dist = []
     idx = 0
     n_row = len(map.index)

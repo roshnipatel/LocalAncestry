@@ -1,2 +1,5 @@
 # Ignore shadow hidden files
 ._*
+
+# Ignore centromere conversion file since output provided
+convert_centromere.py

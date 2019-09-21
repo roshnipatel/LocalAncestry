@@ -64,7 +64,7 @@
         "output"    : "slurm/{rule}.{wildcards.chr}.{wildcards.arm}.out",
         "error"     : "slurm/{rule}.{wildcards.chr}.{wildcards.arm}.err",
         "nodes"     : 2,
-        "time"      : "24:00:00"
+        "time"      : "6:00:00"
     },
     "collapse_ancestry" :
     {
