@@ -1,4 +1,5 @@
 # LocalAncestry
+Roshni Patel (roshnipatel@berkeley.edu)
 
 ## Description
 Calling local ancestry tracts with RFMix v1.5.4 and (optionally) validating global ancestry fractions with ADMIXTURE.
