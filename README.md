@@ -21,12 +21,12 @@ See `scripts/snakemake_variables.py` for more details on naming conventions and 
 * Metadata file for reference population (mapping ancestry to VCF sample ID)
 
 ## Workflow
-* Obtain required files
-* Determine whether your admixed and reference VCFs have the same chromosome naming system; otherwise you might want to uncomment rule `annotate_admix` in the Snakefile and modify accordingly to suit your purposes.
-* Edit variables in `scripts/snakemake_variables.py` as needed. (In all likelihood, only the variables under Data and Programs will need to be edited.)
-* Edit `sm_slurm_config.json` with the partitions you'll be running jobs on.
-* Edit the top of `sm_script.sh` and the top of the Snakefile to reflect the location/type of shell you're using.
-* Edit rule `all` in Snakefile depending on whether you want to run both RFMix and ADMIXTURE or only the former.
-* Make the conda environments in `envs/`
-* Unzip `maps/plink.GRCh38.genetic_map.zip`
-* Run the pipeline with `./sm_script.sh`
+1. Obtain required files
+2. Determine whether your admixed and reference VCFs have the same chromosome naming system; otherwise you might want to uncomment rule `annotate_admix` in the Snakefile and modify accordingly to suit your purposes.
+3. Edit variables in `scripts/snakemake_variables.py` as needed. (In all likelihood, only the variables under Data and Programs will need to be edited.)
+4. Edit `sm_slurm_config.json` with the partitions you'll be running jobs on.
+5. Edit the top of `sm_script.sh` and the top of the Snakefile to reflect the location/type of shell you're using.
+6. Edit rule `all` in Snakefile depending on whether you want to run both RFMix and ADMIXTURE or only the former.
+7. Make the conda environments in `envs/`
+8. Unzip `maps/plink.GRCh38.genetic_map.zip`
+9. Run the pipeline with `./sm_script.sh`
