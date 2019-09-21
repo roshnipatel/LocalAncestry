@@ -3,5 +3,5 @@
 !.gitignore
 !maps
 maps/._*
-!maps/centromere.map
+!maps/chrom_centromere.map
 !maps/plink.GRCh38.genetic_map.zip
