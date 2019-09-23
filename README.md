@@ -52,7 +52,7 @@ See `scripts/snakemake_variables.py` for more details on naming conventions and 
       input:
           DATA_DIR + "combined_global_anc_frac.txt"
   ```
-  (Note: there is currently no way to generate genome-wide global ancestry fractions for RFMix alone, but you can edit `scripts/combine_chrs.py` to allow for that.
+  * (Note: there is currently no way to generate genome-wide global ancestry fractions for RFMix alone, but you can edit `scripts/combine_chrs.py` to allow for that.
 7. Make the conda environments in `envs/`
 8. Unzip `maps/plink.GRCh38.genetic_map.zip`
 9. Run the pipeline with `./sm_script.sh`
