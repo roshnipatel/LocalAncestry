@@ -215,7 +215,7 @@ rule make_rfmix_input_acro:
 
 rule make_rfmix_input:
     input:
-        vcf=DATA_DIR + "chr{chr}/chr{chr}.merged.pruned.0.5.vcf.gz",
+        vcf=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.pruned.{r2}.vcf.gz", r2=RFMIX_R2),
         admix_info=DATA_DIR + ADMIX_METADATA,
         ref_info=REF_DIR + REF_METADATA,
         genetic_map=MAP_DIR + "plink.chr{chr}.GRCh38.map",
@@ -318,9 +318,9 @@ rule collapse_ancestry:
 
 rule global_inference:
     input:
-        bed=expand(DATA_DIR + "bed/em{{em}}.chr{{chr}}.{ind}.{hapl}.bed", ind=INDIV, hapl=HAPL)
+        bed=expand(DATA_DIR + "bed/em{em}.chr{{chr}}.{ind}.{hapl}.bed", ind=INDIV, hapl=HAPL, em=EM_ITER)
     output:
-        DATA_DIR + "chr{chr}/chr{chr}.em{em}.lai_global.txt"
+        DATA_DIR + "chr{chr}/chr{chr}.lai_global.txt"
     params:
         ind=" ".join(INDIV)
     shell:
@@ -336,10 +336,10 @@ rule global_inference:
 
 rule plot_karyogram:
     input:
-        bed=expand(DATA_DIR + "bed/em{{em}}.chr{chr}.{{ind}}.{hapl}.bed", hapl=HAPL, chr=CHROMS),
+        bed=expand(DATA_DIR + "bed/em{em}.chr{chr}.{{ind}}.{hapl}.bed", hapl=HAPL, chr=CHROMS, em=EM_ITER),
         cent=MAP_DIR + "centromere.tsv"
     output:
-        "plots/{ind}.em{em}.png"
+        "plots/{ind}.png"
     shell:
         """
         conda activate py36
@@ -358,7 +358,7 @@ rule admixture_input:
         vcf=DATA_DIR + "chr{chr}/chr{chr}.merged.pruned.{r2}.vcf.gz",
         map=rules.make_rfmix_input.output.pop_map
     output:
-        bed=DATA_DIR + "chr{chr}/chr{chr}.merged.pruned.{r2}.bed"
+        bed=DATA_DIR + "chr{chr}/chr{chr}.merged.pruned.{r2}.bed",
         misc=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.pruned.{{r2}}.{ext}", ext=["bim", "fam"]),
         discard=temp(expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.pruned.{{r2}}.{ext}", ext=["log", "nosex"])),
         pop=DATA_DIR + "chr{chr}/chr{chr}.merged.pruned.{r2}.pop"
@@ -374,9 +374,9 @@ rule admixture_input:
 
 rule run_admixture:
     input:
-        bed=DATA_DIR + "chr{chr}/chr{chr}.merged.pruned.0.1.bed",
-        misc=rules.admixture_input.output.misc,
-        pop=rules.admixture_input.output.pop
+        bed=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.pruned.{r2}.bed", r2=ADMIX_R2),
+        misc=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.pruned.{r2}.{ext}", ext=["bim", "fam"], r2=ADMIX_R2),
+        pop=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.pruned.{r2}.pop", r2=ADMIX_R2)
     output:
         expand(DATA_DIR + "chr{{chr}}.merged.pruned.0.1.{n}.{ext}", ext=['P', 'Q'], n=NPOP)
     shell:
@@ -388,7 +388,7 @@ rule run_admixture:
 rule combine_rfmix_admixture:
     input:
         rfmix=rules.global_inference.output,
-        admix=expand(DATA_DIR + "chr{{chr}}.merged.pruned.0.1.{n}.Q", n=NPOP),
+        admix=expand(DATA_DIR + "chr{{chr}}.merged.pruned.{r2}.{n}.Q", n=NPOP, r2=ADMIX_R2),
         map=rules.make_rfmix_input.output.pop_map
     output:
         temp(DATA_DIR + "chr{chr}/chr{chr}.combined_global_anc_frac.txt")
@@ -414,7 +414,7 @@ rule combine_chrs:
         """
         conda activate py36
         python {COMB_CHR_SCRIPT} \
-            --anc_frac {input.anc} \
+            --anc {input.anc} \
             --map {input.map} \
             --out {output}
         conda deactivate

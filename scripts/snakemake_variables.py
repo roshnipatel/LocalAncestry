@@ -89,6 +89,10 @@ NON_ACRO = [c for c in CHROMS if c not in ACROCENTRIC]
 # much longer, though!)
 EM_ITER = 0
 
+# r2 value used for pruning ADMIXTURE input
+ADMIX_R2 = 0.1
+RFMIX_R2 = 0.5
+
 # Number of reference populations to use
 NPOP = len(REF_POP_VAL.split(','))
 

@@ -74,9 +74,9 @@
     },
     "plot_karyogram" :
     {
-        "name"      : "{rule}.{wildcards.ind}.{wildcards.em}",
-        "output"    : "slurm/{rule}.{wildcards.ind}.{wildcards.em}.out",
-        "error"     : "slurm/{rule}.{wildcards.ind}.{wildcards.em}.err"
+        "name"      : "{rule}.{wildcards.ind}",
+        "output"    : "slurm/{rule}.{wildcards.ind}.out",
+        "error"     : "slurm/{rule}.{wildcards.ind}.err"
     },
     "concat_vcfs" :
     {
