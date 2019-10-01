@@ -15,13 +15,13 @@ args = parser.parse_args()
 filepath = args.anc[0]
 anc = pd.read_csv(filepath, delimiter='\t')
 anc.columns = ['ID', 'YRI_admixture', 'CEU_admixture', 'CEU_rfmix', 'YRI_rfmix']
-chrom = filepath.strip().split('.')[1][3:]
+chrom = int(filepath.strip().split('/')[1][3:])
 anc['Chrom'] = chrom
 
-for filepath in args.anc[1]:
+for filepath in args.anc[1:]:
     tmp = pd.read_csv(filepath, delimiter='\t')
     tmp.columns = ['ID', 'YRI_admixture', 'CEU_admixture', 'CEU_rfmix', 'YRI_rfmix']
-    chrom = filepath.strip().split('.')[1][3:]
+    chrom = int(filepath.strip().split('/')[1][3:])
     tmp['Chrom'] = chrom
     anc = pd.concat([anc, tmp])
 
@@ -33,7 +33,7 @@ merged["YRI_admix_bp"] = merged["YRI_admixture"] * merged["ChromosomeEnd"]
 merged["CEU_admix_bp"] = merged["CEU_admixture"] * merged["ChromosomeEnd"]
 merged["YRI_rfmix_bp"] = merged["YRI_rfmix"] * merged["ChromosomeEnd"]
 merged["CEU_rfmix_bp"] = merged["CEU_rfmix"] * merged["ChromosomeEnd"]
-total_bp = chr_map['ChromsomeEnd'].sum()
+total_bp = chr_map['ChromosomeEnd'].sum()
 global_frac = merged.groupby('ID').sum().divide(total_bp)
 
-global_frac.to_csv(args.out, delimiter='\t', index_col=False)
+global_frac[["YRI_admix_bp", "CEU_admix_bp", "YRI_rfmix_bp", "CEU_rfmix_bp"]].to_csv(args.out, sep='\t', float_format='%.5f', )

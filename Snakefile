@@ -391,7 +391,7 @@ rule combine_rfmix_admixture:
         admix=expand(DATA_DIR + "chr{{chr}}.merged.pruned.{r2}.{n}.Q", n=NPOP, r2=ADMIX_R2),
         map=rules.make_rfmix_input.output.pop_map
     output:
-        temp(DATA_DIR + "chr{chr}/chr{chr}.combined_global_anc_frac.txt")
+        DATA_DIR + "chr{chr}/chr{chr}.combined_global_anc_frac.txt"
     shell:
         """
         conda activate py36
