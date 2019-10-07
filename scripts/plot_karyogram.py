@@ -8,6 +8,7 @@ import argparse
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import pandas as pd
 import pylab
 from matplotlib.path import Path
 import matplotlib.patches as patches
@@ -20,7 +21,7 @@ def splitstr(option, opt, value, parser):
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--bed_path', help='All bed files for a particular individual (i.e. both haplotypes on all chromosomes)', required=True, nargs='+')
+parser.add_argument('--tracts', help='Files of called local ancestry tracts for all chromsomes', required=True, nargs='+')
 parser.add_argument('--ind', help='Individual sample ID to process.', required=True)
 parser.add_argument('--chrX', help='include chrX?', default=False, action="store_true")
 parser.add_argument('--centromeres', help='Filepath for information on centromere position.', required=True)
@@ -84,7 +85,7 @@ def plot_rects(anc, chr, start, stop, hap, pop_order, colors, chrX):
         ]
         clip_mask = Path(vertices=mask, codes=mask_codes)
 
-    if hap == 'A': # bed_a ancestry goes on top
+    if hap == 0:
         verts = [
             (float(start), chr), # Left, bottom
             (float(start), chr + 0.4), # Left, top
@@ -92,7 +93,7 @@ def plot_rects(anc, chr, start, stop, hap, pop_order, colors, chrX):
             (float(stop), chr), # Right, bottom
             (0, 0), # Ignored
         ]
-    else: # bed_b ancestry goes on bottom
+    else:
         verts = [
             (float(start), chr - 0.4), # Left, bottom
             (float(start), chr), # Left, top
@@ -118,8 +119,6 @@ def plot_rects(anc, chr, start, stop, hap, pop_order, colors, chrX):
         col.set_clip_path(clip_mask, ax.transData)
     ax.add_collection(col)
 
-
-# Read in bed files and get individual name
 pop_order = args.pop_order.split(',')
 ind = args.ind
 
@@ -167,26 +166,20 @@ for line in centro:
     centromeres[line[0]] = [float(n) for n in line[5:]]
 
 # Plot rectangles
-for filepath in args.bed_path:
-    bed = open(filepath)
-
-    # Extract chromosome and haplotype information from filepath
-    s = filepath.strip().split('.')
-    chrom = s[1][3:]
-    hapl = s[3]
-
+for tract_file in args.tracts:
     first_line = True
-    for line in bed:
+    for line in open(tract_file):
         line = line.strip().split('\t')
-        if first_line:
-            plot_rects(line[3], int(line[0]), 0, line[2], hapl, pop_order, colors, chrX)
-            first_line = False
-        try:
-            plot_rects(line[3], int(line[0]), line[1], line[2], hapl, pop_order, colors, chrX)
-        except ValueError: # Flexibility for chrX
-            plot_rects(line[3], 23, line[1], line[2], hapl, pop_order, colors, chrX)
-        except IndexError:
-            plot_rects(line[3], int(line[0]), line[1], centromeres[str(chrom)][-1], hapl, pop_order, colors, chrX)
+        if line[0] == args.ind:
+            if first_line:
+                plot_rects(line[3], int(line[1]), line[4], line[5], int(line[2]), pop_order, colors, chrX)
+                first_line = False
+            try:
+                plot_rects(line[3], int(line[1]), line[4], line[5], int(line[2]), pop_order, colors, chrX)
+            except ValueError: # Flexibility for chrX
+                plot_rects(line[3], 23, line[4], line[5], int(line[2]), pop_order, colors, chrX)
+            except IndexError: # Reached the end of a chromosome
+                plot_rects(line[3], int(line[1]), line[4], line[5], int(line[2]), pop_order, colors, chrX)
 
 # Write a legend
 p = []
