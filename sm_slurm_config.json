@@ -16,7 +16,7 @@
         "output"    : "slurm/{rule}.{wildcards.chr}.out",
         "error"     : "slurm/{rule}.{wildcards.chr}.err"
     },
-    "filter_ref" :
+    "filter_1KG" :
     {
         "name"      : "{rule}.{wildcards.chr}",
         "output"    : "slurm/{rule}.{wildcards.chr}.out",
@@ -29,12 +29,6 @@
         "error"     : "slurm/{rule}.{wildcards.chr}.err"
     },
     "find_indep_snps" :
-    {
-        "name"      : "{rule}.{wildcards.chr}",
-        "output"    : "slurm/{rule}.{wildcards.chr}.out",
-        "error"     : "slurm/{rule}.{wildcards.chr}.err",
-    },
-    "intersect" :
     {
         "name"      : "{rule}.{wildcards.chr}",
         "output"    : "slurm/{rule}.{wildcards.chr}.out",
@@ -104,9 +98,6 @@
     },
     "run_admixture" :
     {
-        "name"      : "{rule}.{wildcards.chr}",
-        "output"    : "slurm/{rule}.{wildcards.chr}.out",
-        "error"     : "slurm/{rule}.{wildcards.chr}.err",
         "nodes"     : 2
     },
     "global_inference" :

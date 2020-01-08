@@ -18,8 +18,8 @@ def parse_args():
     parser.add_argument('--snp_map', help='Headerless, 2-row file with 1 column per SNP: bp, cM. Should only contain SNPs that RFMix was run with, and SNPs should be in same order as RFMix input.', required=True)
     parser.add_argument('--fbk', default=None)
     parser.add_argument('--fbk_threshold', type=float, default = 0.9)
+    parser.add_argument('--ind', help='Space-delimited list of individual sample IDs to generate output files for.', required=True, nargs='+')
     parser.add_argument('--pop_map', help='Headerless, 2-row file with 1 column per individual: sample ID, race/ancestry classification. Individuals should be in same order as RFMix input.', required=True)
-    parser.add_argument('--ind', help='Optional comma-delimited list of individual sample IDs for which to generate ancestry tract files. If not provided, ancestry tracts will be generated for all individuals in pop_map file.', default=None)
     parser.add_argument('--pop_labels', default='CEU,YRI', help='Comma-delimited list of population labels in the order of rfmix populations (1 first, 2 second, and so on). Used in bed files and karyogram labels.')
     parser.add_argument('--out', help='Prefix to bed file. .{sample_ID}.A.bed and .{sample_ID}.B.bed will be appended.', required=True)
     parser.add_argument('--chr', help='Chromosome to process (should be an integer).', required=True)
@@ -40,7 +40,7 @@ def check_gt_posterior(fbk_max, fbk_threshold, index, add, hap_anc, line, curren
       current_anc[add] = -9
     return (current_anc, hap_anc)
 
-def find_haplotype_bounds(indiv, index, add, pop_order, tracts, npop, chr):
+def find_haplotype_bounds(index, add, pop_order, hap, npop, chr):
     print str(chr) + ' [' + datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + ']'
     rfmix_file = re.sub(r'chr[X0-9]+', 'chr' + str(chr), args.rfmix)
     if rfmix_file.endswith('gz'):
@@ -86,35 +86,35 @@ def find_haplotype_bounds(indiv, index, add, pop_order, tracts, npop, chr):
         else:
             # We've reached the end of a region. Need to print.
             if last_anc_pos_cm[0] == -9:
-                tracts.write(indiv + '\t' + str(chr) + '\t' + str(add) + '\t' + 'UNK' +
-                            '\t' + post_anc_pos_cm[1] + '\t' + last_anc_pos_cm[1] +
-                            '\t' + post_anc_pos_cm[2] + '\t' + last_anc_pos_cm[2] + '\n')
+                hap.write(str(chr) + '\t' + post_anc_pos_cm[1] + '\t' + last_anc_pos_cm[1] +
+                        '\tUNK\t' + post_anc_pos_cm[2] + '\t' + last_anc_pos_cm[2] + '\n')
             else:
-                tracts.write(indiv + '\t' + str(chr) + '\t' + str(add) + '\t' +
-                            pop_order[int(last_anc_pos_cm[0])-1] + '\t' +
-                            post_anc_pos_cm[1] + '\t' + last_anc_pos_cm[1] + '\t' +
-                            post_anc_pos_cm[2] + '\t' + last_anc_pos_cm[2] + '\n')
+                hap.write(str(chr) + '\t' + post_anc_pos_cm[1] + '\t' + last_anc_pos_cm[1] + '\t' +
+                        pop_order[int(last_anc_pos_cm[0])-1] + '\t' +
+                        post_anc_pos_cm[2] + '\t' + last_anc_pos_cm[2] + '\n')
             post_anc_pos_cm = current_anc_pos_cm
 
         last_anc_pos_cm = current_anc_pos_cm
 
     # Last iteration, still need to print
     if last_anc_pos_cm[0] == -9:
-        tracts.write(indiv + '\t' + str(chr) + '\t' + str(add) + '\t' + 'UNK' +
-                    '\t' + post_anc_pos_cm[1] + '\t' + current_anc_pos_cm[1] +
-                    '\t' + post_anc_pos_cm[2] + '\t' + current_anc_pos_cm[2] + '\n')
+        hap.write(str(chr) + '\t' + post_anc_pos_cm[1] + '\t' + current_anc_pos_cm[1] +
+            '\tUNK\t' + post_anc_pos_cm[2] + '\t' + current_anc_pos_cm[2] + '\n')
     else:
-        tracts.write(indiv + '\t' + str(chr) + '\t' + str(add) + '\t' +
-                    pop_order[int(current_anc_pos_cm[0])-1] + '\t' +
-                    post_anc_pos_cm[1] + '\t' + current_anc_pos_cm[1] + '\t' +
-                    post_anc_pos_cm[2] + '\t' + current_anc_pos_cm[2] + '\n')
+        hap.write(str(chr) + '\t' + post_anc_pos_cm[1] + '\t' + current_anc_pos_cm[1] +
+            '\t' + pop_order[int(current_anc_pos_cm[0])-1] + '\t' +
+            post_anc_pos_cm[2] + '\t' + current_anc_pos_cm[2] + '\n')
 
 def main(current_ind, index, pop_order, chr):
     # Open bed files (2 haplotypes per individual)
-    tracts = open(args.out, 'w')
-    find_haplotype_bounds(current_ind, index, 0, pop_order, tracts, npop, chr)
-    find_haplotype_bounds(current_ind, index, 1, pop_order, tracts, npop, chr)
-    tracts.close()
+    hap_a = open(args.out + '.' + current_ind + '.A.bed', 'w')
+    hap_b = open(args.out + '.' + current_ind + '.B.bed', 'w')
+
+    find_haplotype_bounds(index, 0, pop_order, hap_a, npop, chr)
+    hap_a.close()
+
+    find_haplotype_bounds(index, 1, pop_order, hap_b, npop, chr)
+    hap_b.close()
 
 if __name__ == '__main__':
     # Load parameters and files
@@ -126,14 +126,9 @@ if __name__ == '__main__':
     # Determine ordering of individuals in RFMix input
     ind_order = open(args.pop_map).readline().strip().split('\t')
 
-    if args.ind:
-        ind_list = args.ind.strip().split(',')
-    else:
-        ind_list = ind_order
-
-    # Generate ancestry tract files for each individual in pop_map file
-    for indiv in ind_list:
-        idx = ind_order.index(indiv)
+    # Generate ancestry tract files for each individual specified in command-line argument
+    for i in args.ind:
+        idx = ind_order.index(i) # Grab index of current individual in RFMix input
         print 'Starting [' + datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + ']'
-        main(indiv, idx, pop_labels, chr)
+        main(i, idx, pop_labels, chr)
         print 'Finished [' + datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + ']'
