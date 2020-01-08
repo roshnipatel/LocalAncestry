@@ -103,8 +103,8 @@ with open(args.out + ".classes.txt", 'w') as f:
     f.write(' '.join([str(a) for a in classes]))
 
 with open(args.out + ".pop_map.txt", 'w') as f:
-    f.write("\t".join(IDs))
+    f.write("\t".join(samples))
     f.write('\n')
     f.write("\t".join(ancestries))
     f.write('\n')
-    f.write("\t".join(ancestry_IDs))
+    f.write("\t".join([str(i) for i in ancestry_IDs]))

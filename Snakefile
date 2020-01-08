@@ -363,7 +363,7 @@ rule admixture_input:
         conda activate plink-env
         plink --vcf {input.vcf} --make-bed --keep-allele-order --out {params.out_file}
         conda deactivate
-        tail -n 1 {input.map} | sed 's/\t/\n/g' | sed 's/ADMIX/-/g' > {output.pop}
+        head -n 2 {input.map} | tail -n 1 | sed "s/\t/\n/g" | sed "s/ADMIX/-/g" > {output.pop}
         """
 
 rule run_admixture:

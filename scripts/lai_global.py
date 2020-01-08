@@ -7,7 +7,7 @@ Modified lightly from Alicia Martin (armartin via GitHub).
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--tracts', help='File of called local ancestry tracts for all individuals', nargs='+', required=True)
+parser.add_argument('--tracts', help='File of called local ancestry tracts for all individuals', required=True)
 parser.add_argument('--pops', default='EUR,AFR', help='Comma-separated list of population labels in the order of rfmix populations (1 first, 2 second, and so on). Used in bed files and karyogram labels', required=True)
 parser.add_argument('--out', help='Filepath for output', required=True)
 args = parser.parse_args()
