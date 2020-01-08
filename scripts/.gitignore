@@ -9,3 +9,4 @@ correlate_rfmix_admixture.R
 
 # Ignore Python cache
 __pycache__
+__pycache__/*
