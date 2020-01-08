@@ -15,7 +15,7 @@ parser.add_argument('--out', help='Filepath of output file.', required=True)
 args = parser.parse_args()
 
 # Split desired ancestries into a list
-pop_val = args.pop_val.strip().split('.')
+pop_val = args.pop_val.strip().split(',')
 
 # Reads in sample metadata, setting first column as index. Indices of filtered
 # rows will be written to output file, which is why sample IDs must be the first

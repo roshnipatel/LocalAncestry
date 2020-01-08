@@ -31,8 +31,8 @@ REF_POP_COL = "Population"
 ADMIX_POP_COL = "race1c"
 
 # Race/ancestry values in metadata file to filter for
-REF_POP_VAL = "CEU.YRI"
-ADMIX_POP_VAL = "1"
+REF_POP_VAL = "CEU,YRI"
+ADMIX_POP_VAL = "3"
 
 
 ### Scripts ###
@@ -90,11 +90,11 @@ NON_ACRO = [c for c in CHROMS if c not in ACROCENTRIC]
 EM_ITER = 0
 
 # r2 value used for pruning ADMIXTURE input
-ADMIX_R2 = "0.1"
-RFMIX_R2 = "0.5"
+ADMIX_R2 = 0.1
+RFMIX_R2 = 0.5
 
 # Number of reference populations to use
-NPOP = len(REF_POP_VAL.split('.'))
+NPOP = len(REF_POP_VAL.split(','))
 
 # Arms of chromosome
 ARMS = ['p', 'q']

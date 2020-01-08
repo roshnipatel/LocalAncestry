@@ -20,8 +20,8 @@ parser.add_argument('--out', help='Prefix for output files.', required=True)
 parser.add_argument('--cent', help='Starting position of centromere for chromosome being processed.', required=True)
 args = parser.parse_args()
 
-admix_pop_val = args.admix_pop_val.split('.')
-ref_pop_val = args.ref_pop_val.split('.')
+admix_pop_val = args.admix_pop_val.split(',')
+ref_pop_val = args.ref_pop_val.split(',')
 
 cent_pos = int(args.cent)
 
