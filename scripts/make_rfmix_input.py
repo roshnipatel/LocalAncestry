@@ -107,4 +107,4 @@ with open(args.out + ".pop_map.txt", 'w') as f:
     f.write('\n')
     f.write("\t".join(ancestries))
     f.write('\n')
-    f.write("\t".join(ancestry_IDs))
+    f.write("\t".join([str(i) for i in ancestry_IDs]))
