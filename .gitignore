@@ -15,3 +15,6 @@ temp/
 
 # Ignore file made by R while plotting
 Rplots.pdf
+
+# Ignore results directory
+results/
