@@ -195,7 +195,7 @@ rule make_rfmix_input_acro:
     wildcard_constraints:
         chr="|".join(ACROCENTRIC)
     params:
-        out_file="data/chr{chr}/chr{chr}"
+        out_file=DATA_DIR + "chr{chr}/chr{chr}"
     shell:
         """
         conda activate py36
@@ -229,7 +229,7 @@ rule make_rfmix_input:
     wildcard_constraints:
         chr="|".join(NON_ACRO)
     params:
-        out_file="data/chr{chr}/chr{chr}"
+        out_file=DATA_DIR + "chr{chr}/chr{chr}"
     shell:
         """
         conda activate py36
@@ -253,7 +253,7 @@ rule run_rfmix:
         classes=DATA_DIR + "chr{chr}/chr{chr}.classes.txt",
         alleles=DATA_DIR + "chr{chr}/chr{chr}.alleles.{arm}.txt"
     output:
-        temp(expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.{{arm}}.em{em}.Viterbi.txt", em=EM_ITER))
+        temp(expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.{{arm}}.{em}.Viterbi.txt", em=EM_ITER))
     params:
         out_file=DATA_DIR + "chr{chr}/chr{chr}.{arm}"
     shell:
@@ -289,7 +289,7 @@ rule merge_rfmix_output:
         """
         cat {input.viterbi} > {output.viterbi}
         cat {input.snp_locations} > {output.snp_locations}
-        cat {input.pos_map} > {output.pos_map}
+        paste {input.pos_map} > {output.pos_map}
         """
 
 rule collapse_ancestry:
