@@ -50,7 +50,7 @@ with open(args.out + ".alleles.p.txt", 'w') as p_file, open(args.out + ".alleles
 
 # Create snp locations file (LF-delimited file that contains genetic position of
 # every marker). Also write a map from SNP chromosomal position to genetic position.
-genetic_map = pd.read_csv(args.genetic_map, delimiter=' ', names=["Chrom", "SNP", "GeneticDist", "Pos"])
+genetic_map = pd.read_csv(args.genetic_map, delimiter='/s', names=["Chrom", "SNP", "GeneticDist", "Pos"])
 
 q_gen_pos = map_positions(genetic_map, q_pos)
 with open(args.out + ".snp_locations.q.txt", 'w') as snp_loc:

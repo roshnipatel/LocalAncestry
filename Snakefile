@@ -108,8 +108,8 @@ rule filter_ref:
         """
         conda activate bcftools-env
         mkdir -p {params.out_dir}
-        bcftools view -S {input.filter} --force-samples -Ob {input.ref} | \
-            bcftools view --genotype ^miss --phased -Ob | \
+        bcftools view -S {input.filter} --force-samples -Ou {input.ref} | \
+            bcftools view --genotype ^miss --phased -Ou | \
             bcftools view -i 'MAF[0] > .05' -Ob -o {output.bcf}
         bcftools index -c {output.bcf}
         conda deactivate
@@ -143,7 +143,7 @@ rule merge:
     shell:
         """
         conda activate bcftools-env
-        bcftools merge -m none -Ob {input.bcf} | \
+        bcftools merge -m none -Ou {input.bcf} | \
             bcftools view -i 'MAF[0] > .1' -Oz -o {output}
         conda deactivate
         """
