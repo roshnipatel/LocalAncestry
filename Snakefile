@@ -8,8 +8,8 @@ shell.prefix("source ~/.bashrc; ")
 
 rule all:
     input:
-        # DATA_DIR + "combined_global_anc_frac.txt"
-        expand(DATA_DIR + "chr{chr}/chr{chr}.phasing_check.txt", chr=CHROMS)
+        DATA_DIR + "combined_global_anc_frac.txt"
+        # expand(DATA_DIR + "chr{chr}/chr{chr}.phasing_check.txt", chr=CHROMS)
 
 rule create_admix_filter:
     input:
