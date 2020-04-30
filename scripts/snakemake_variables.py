@@ -62,6 +62,8 @@ COMB_SCRIPT = "scripts/combine_ancestry_calls.py"
 # Script for combining global ancestry estimates across chromosomes
 COMB_CHR_SCRIPT = "scripts/combine_chrs.py"
 
+# Script for checking RFMix phasing against original VCF
+PHASING_SCRIPT = "scripts/check_phasing.py"
 
 
 ### Programs ###

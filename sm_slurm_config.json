@@ -113,5 +113,21 @@
         "name"      : "{rule}.{wildcards.chr}",
         "output"    : "slurm/{rule}.{wildcards.chr}.out",
         "error"     : "slurm/{rule}.{wildcards.chr}.err"
+    },
+    "merge_phasing" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err",
+        "time"      : "5:00",
+        "memory"    : 200
+    },
+    "check_phasing" :
+    {
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err",
+        "time"      : "10:00",
+        "memory"    : 400
     }
 }

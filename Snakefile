@@ -8,7 +8,8 @@ shell.prefix("source ~/.bashrc; ")
 
 rule all:
     input:
-        DATA_DIR + "combined_global_anc_frac.txt"
+        # DATA_DIR + "combined_global_anc_frac.txt"
+        expand(DATA_DIR + "chr{chr}/chr{chr}.phasing_check.txt", chr=CHROMS)
 
 rule create_admix_filter:
     input:
@@ -416,6 +417,35 @@ rule combine_chrs:
         python {COMB_CHR_SCRIPT} \
             --anc {input.anc} \
             --map {input.map} \
+            --out {output}
+        conda deactivate
+        """
+
+rule merge_phasing:
+    input:
+        lambda wildcards: expand(DATA_DIR + \
+            "chr{{chr}}/chr{{chr}}.{arm}.allelesRephased0.txt", arm=ARMS) \
+            if wildcards.chr not in ACROCENTRIC else \
+            DATA_DIR + "chr{chr}/chr{chr}.q.allelesRephased0.txt",
+    output:
+        DATA_DIR + "chr{chr}/chr{chr}.allelesRephased0.txt"
+    shell:
+        """
+        cat {input} > {output}
+        """
+
+rule check_phasing:
+    input:
+        vcf=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.pruned.{r2}.vcf.gz", r2=RFMIX_R2),
+        phasing=DATA_DIR + "chr{chr}/chr{chr}.allelesRephased0.txt"
+    output:
+        DATA_DIR + "chr{chr}/chr{chr}.phasing_check.txt"
+    shell:
+        """
+        conda activate py36
+        python {PHASING_SCRIPT} \
+            --vcf {input.vcf} \
+            --rfmix_phased {input.phasing} \
             --out {output}
         conda deactivate
         """
