@@ -96,10 +96,6 @@
         "output"    : "slurm/{rule}.{wildcards.chr}.out",
         "error"     : "slurm/{rule}.{wildcards.chr}.err"
     },
-    "run_admixture" :
-    {
-        "nodes"     : 2
-    },
     "global_inference" :
     {
         "name"      : "{rule}.{wildcards.chr}",
