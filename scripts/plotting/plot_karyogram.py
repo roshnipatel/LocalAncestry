@@ -7,6 +7,8 @@ Modified lightly from Alicia Martin (armartin via GitHub).
 import argparse
 import matplotlib
 matplotlib.use("Agg")
+matplotlib.rcParams["font.sans-serif"] = "Helvetica"
+matplotlib.rcParams["font.size"] = 12
 import matplotlib.pyplot as plt
 import pylab
 from matplotlib.path import Path
@@ -124,7 +126,7 @@ pop_order = args.pop_order.split(',')
 ind = args.ind
 
 # Define plotting space
-fig = plt.figure()
+fig = plt.figure(dpi=1000)
 ax = fig.add_subplot(111)
 ax.set_xlim(-5,300)
 chrX = args.chrX
@@ -145,13 +147,11 @@ else:
 
 # Define colors
 def hex_to_rgb(value):
-    value = value.lstrip('#')
     lv = len(value)
     return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
 
-colors = []
 color_list = args.colors.split(',')
-[colors.append(x) for x in color_list]
+colors = ["#" + x for x in color_list]
 
 # Define centromeres
 centro = open(args.centromeres)
@@ -164,16 +164,16 @@ for line in centro:
     line = line.strip().split('\t')
     if chrX and line[0] == 'X':
         line[0] = '23'
-    centromeres[line[0]] = [float(n) for n in line[5:]]
+    centromeres[line[0]] = [float(n) for n in line[2:]]
 
 # Plot rectangles
 for filepath in args.bed_path:
     bed = open(filepath)
 
     # Extract chromosome and haplotype information from filepath
-    s = filepath.strip().split('.')
-    chrom = s[1][3:]
-    hapl = s[3]
+    s = filepath.strip().split('/')
+    chrom = s[8][3:]
+    hapl = s[9].split('.')[1]
 
     first_line = True
     for line in bed:

@@ -8,8 +8,9 @@ import pandas as pd
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--sample_data', help='Path to sample metadata. Requirements: file is csv, first column is indiv. sample ID in VCF.', required=True)
+parser.add_argument('--sample_data', help='Path to sample metadata. Requirements: file is tab-delimited.', required=True)
 parser.add_argument('--pop_col', help='Name of column that specifies race/ancestry in sample metadata.', required=True)
+parser.add_argument('--id_col', help='Name of column that specifies VCF sample ID in sample metadata.', required=True)
 parser.add_argument('--pop_val', help='Comma-delimited values of race/ancestry column to filter for.', required=True)
 parser.add_argument('--out', help='Filepath of output file.', required=True)
 args = parser.parse_args()
@@ -20,7 +21,7 @@ pop_val = args.pop_val.strip().split(',')
 # Reads in sample metadata, setting first column as index. Indices of filtered
 # rows will be written to output file, which is why sample IDs must be the first
 # column in the metadata file.
-samples = pd.read_csv(args.sample_data, index_col=0)
+samples = pd.read_csv(args.sample_data, index_col=args.id_col, sep='\t')
 filtered_samples = samples[samples[args.pop_col].isin(pop_val)]
 filtered_IDs = set(list(filtered_samples.index.values))
 

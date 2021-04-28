@@ -10,6 +10,16 @@
         "output"    : "slurm/{rule}.out",
         "error"     : "slurm/{rule}.err"
     },
+    "create_admix_filter" :
+    {
+        "memory"    : 500,
+        "time"      : "5:00"
+    },
+    "create_ref_filter" :
+    {
+        "memory"    : 500,
+        "time"      : "5:00"
+    },
     "split_mesa" :
     {
         "name"      : "{rule}.{wildcards.chr}",
@@ -68,9 +78,9 @@
     },
     "collapse_ancestry" :
     {
-        "name"      : "{rule}.{wildcards.chr}.{wildcards.em}",
-        "output"    : "slurm/{rule}.{wildcards.chr}.{wildcards.em}.out",
-        "error"     : "slurm/{rule}.{wildcards.chr}.{wildcards.em}.err"
+        "name"      : "{rule}.{wildcards.chr}",
+        "output"    : "slurm/{rule}.{wildcards.chr}.out",
+        "error"     : "slurm/{rule}.{wildcards.chr}.err"
     },
     "plot_karyogram" :
     {

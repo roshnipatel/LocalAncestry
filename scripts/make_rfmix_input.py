@@ -10,9 +10,11 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--admix', help='Path to admixed sample metadata. Requirements: file is csv, first column is indiv. sample ID.', required=True)
+parser.add_argument('--admix_id_col', help='Name of column that specifies VCF sample ID in admixed sample metadata.', required=True)
 parser.add_argument('--admix_pop_col', help='Name of column that specifies race/ancestry in admixed sample metadata.', required=True)
 parser.add_argument('--admix_pop_val', help='Comma-delimited values of race/ancestry column to filter for.', required=True)
 parser.add_argument('--ref', help='Path to reference sample metadata. Requirements: file is csv, first column is indiv. sample ID.', required=True)
+parser.add_argument('--ref_id_col', help='Name of column that specifies VCF sample ID in reference sample metadata.', required=True)
 parser.add_argument('--ref_pop_col', help='Name of column that specifies race/ancestry in reference sample metadata.', required=True)
 parser.add_argument('--ref_pop_val', help='Comma-delimited values of race/ancestry column in reference data to filter for.', required=True)
 parser.add_argument('--genetic_map', help='Path to map from genetic positions to chromosomal coordinates.', required=True)
@@ -50,7 +52,7 @@ with open(args.out + ".alleles.p.txt", 'w') as p_file, open(args.out + ".alleles
 
 # Create snp locations file (LF-delimited file that contains genetic position of
 # every marker). Also write a map from SNP chromosomal position to genetic position.
-genetic_map = pd.read_csv(args.genetic_map, delimiter='/s', names=["Chrom", "SNP", "GeneticDist", "Pos"])
+genetic_map = pd.read_csv(args.genetic_map, sep='\s+', names=["Chrom", "SNP", "GeneticDist", "Pos"])
 
 q_gen_pos = map_positions(genetic_map, q_pos)
 with open(args.out + ".snp_locations.q.txt", 'w') as snp_loc:
@@ -82,12 +84,12 @@ sample_anc_map = {}
 anc_ID_map = {k: v + 1 for v, k in enumerate(ref_pop_val)}
 anc_ID_map['ADMIX'] = 0
 
-admix = pd.read_csv(args.admix, index_col=0)
+admix = pd.read_csv(args.admix, index_col=args.admix_id_col, sep='\t')
 admix_filtered = admix[admix[args.admix_pop_col].isin(admix_pop_val)]
 for index, row in admix_filtered.iterrows():
     sample_anc_map[index] = 'ADMIX'
 
-ref = pd.read_csv(args.ref, index_col=0)
+ref = pd.read_csv(args.ref, index_col=args.ref_id_col, sep='\t')
 ref_filtered = ref[ref[args.ref_pop_col].isin(ref_pop_val)]
 for index, row in ref_filtered.iterrows():
     sample_anc_map[index] = row[args.ref_pop_col]

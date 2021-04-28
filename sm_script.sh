@@ -5,7 +5,7 @@
 
 snakemake --rerun-incomplete --keep-going -j 20 \
         --latency-wait 60 --wait-for-files \
-        --cluster-config sm_slurm_config.json \
+        --cluster-config scripts/sm_slurm_config.json \
         --cluster "sbatch -p {cluster.queue} \
                         -t {cluster.time} \
                         --ntasks-per-node={cluster.tasks} \

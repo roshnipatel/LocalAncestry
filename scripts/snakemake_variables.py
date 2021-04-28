@@ -1,6 +1,7 @@
 """
 Variables and filepaths for Snakefile
 """
+import pandas as pd
 
 ### Directories ###
 
@@ -18,21 +19,28 @@ MAP_DIR = "data/maps/"
 ### Data ###
 
 # Basename of phased VCF for admixed and reference data
-ADMIX_DATA = "mesa.1331samples.genotypes.pass.phased.maf01.vcf.gz"
+ADMIX_DATA = "genotype_freeze.6a.pass_only.phased.mesa_1331samples.maf01.biallelic.vcf.gz"
 REF_DATA = "GRCh38.filt.1kg.phase3.v5a.biSNPs.vcf.gz"
 
-# Files containing metadata for admixed and reference data. Must be .csv, and
+# Files containing metadata for admixed and reference data. Must be tab-delimited, and
 # first column should be sample ID in VCF.
-ADMIX_METADATA = "MESA_sample_info.csv"
-REF_METADATA = "20130606_sample_info.csv"
+ADMIX_METADATA = "metadata-TOPMed_MESA_RNAseq_2973samples_metadata.combined_Black_samples.tsv"
+REF_METADATA = "20130606_sample_info.tsv"
+
+# Column specifying sample ID in metadata file
+REF_ID_COL = "Sample"
+ADMIX_ID_COL = "nwd_id"
 
 # Column specifying race/ancestry in metadata file
 REF_POP_COL = "Population"
-ADMIX_POP_COL = "race1c"
+ADMIX_POP_COL = "race"
 
 # Race/ancestry values in metadata file to filter for
 REF_POP_VAL = "CEU,YRI"
-ADMIX_POP_VAL = "3"
+ADMIX_POP_VAL = "Black"
+
+# Colors for plotting scripts
+HEX_COLORS = "455A8E,E48671,22223A"
 
 
 ### Scripts ###
@@ -65,6 +73,9 @@ COMB_CHR_SCRIPT = "scripts/combine_chrs.py"
 # Script for checking RFMix phasing against original VCF
 PHASING_SCRIPT = "scripts/check_phasing.py"
 
+# Script for computing distribution of European tract lengths
+TRACT_SCRIPT = "scripts/compute_eur_dist.py"
+
 
 ### Programs ###
 
@@ -91,7 +102,11 @@ NON_ACRO = [c for c in CHROMS if c not in ACROCENTRIC]
 # much longer, though!)
 EM_ITER = 0
 
-# r2 value used for pruning ADMIXTURE input
+# MAF threshold used for filtering input
+ADMIX_MAF = 0.1
+RFMIX_MAF = 0.05
+
+# r2 value used for pruning input
 ADMIX_R2 = 0.1
 RFMIX_R2 = 0.5
 

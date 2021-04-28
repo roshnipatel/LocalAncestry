@@ -18,11 +18,10 @@ def parse_args():
     parser.add_argument('--snp_map', help='Headerless, 2-row file with 1 column per SNP: bp, cM. Should only contain SNPs that RFMix was run with, and SNPs should be in same order as RFMix input.', required=True)
     parser.add_argument('--fbk', default=None)
     parser.add_argument('--fbk_threshold', type=float, default = 0.9)
-    parser.add_argument('--ind', help='Space-delimited list of individual sample IDs to generate output files for.', required=True, nargs='+')
     parser.add_argument('--pop_map', help='Headerless, 2-row file with 1 column per individual: sample ID, race/ancestry classification. Individuals should be in same order as RFMix input.', required=True)
     parser.add_argument('--pop_labels', default='CEU,YRI', help='Comma-delimited list of population labels in the order of rfmix populations (1 first, 2 second, and so on). Used in bed files and karyogram labels.')
-    parser.add_argument('--out', help='Prefix to bed file. .{sample_ID}.A.bed and .{sample_ID}.B.bed will be appended.', required=True)
-    parser.add_argument('--chr', help='Chromosome to process (should be an integer).', required=True)
+    parser.add_argument('--out', help='Prefix to bed file. {sample_ID}.A.bed and {sample_ID}.B.bed will be appended.', required=True)
+    parser.add_argument('--chrom', help='Chromosome to process (should be an integer).', required=True)
 
     args = parser.parse_args()
     return(args)
@@ -107,8 +106,8 @@ def find_haplotype_bounds(index, add, pop_order, hap, npop, chr):
 
 def main(current_ind, index, pop_order, chr):
     # Open bed files (2 haplotypes per individual)
-    hap_a = open(args.out + '.' + current_ind + '.A.bed', 'w')
-    hap_b = open(args.out + '.' + current_ind + '.B.bed', 'w')
+    hap_a = open(args.out + current_ind + '.A.bed', 'w')
+    hap_b = open(args.out + current_ind + '.B.bed', 'w')
 
     find_haplotype_bounds(index, 0, pop_order, hap_a, npop, chr)
     hap_a.close()
@@ -121,14 +120,25 @@ if __name__ == '__main__':
     args = parse_args()
     pop_labels = args.pop_labels.split(',')
     npop = len(pop_labels)
-    chr = int(args.chr)
+    chrom = int(args.chrom)
 
-    # Determine ordering of individuals in RFMix input
-    ind_order = open(args.pop_map).readline().strip().split('\t')
+    # Identify admixed individual IDs for which to generate bed files
+    with open(args.pop_map, 'r') as f:
+        ind_ids = f.readline().strip().split('\t')
+        pop_type = f.readline().strip().split('\t')
+
+    admix_idv = {}
+    i = 0
+    for tup in zip(ind_ids, pop_type):
+        if tup[1] != "ADMIX":
+            break
+        admix_idv[i] = tup[0]
+        i += 1
 
     # Generate ancestry tract files for each individual specified in command-line argument
-    for i in args.ind:
-        idx = ind_order.index(i) # Grab index of current individual in RFMix input
+    for idx, ind_id in admix_idv.items():
         print 'Starting [' + datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + ']'
-        main(i, idx, pop_labels, chr)
+        main(ind_id, idx, pop_labels, chrom)
         print 'Finished [' + datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + ']'
+    status_file = open(args.out + "job_complete.txt", 'w')
+    status_file.close()
