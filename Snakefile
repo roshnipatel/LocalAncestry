@@ -1,8 +1,9 @@
-# Run RFMix v1.5.4 and optionally ADMIXTURE
+# Run RFMix v1.5.4 and optionally ADMIXTURE. Used to generate Fig. 1a and S1.
 
 # Variables and filepaths stored here
 include: "scripts/snakemake_variables.py"
 
+# Required to use conda environments
 shell.executable("/usr/bin/bash")
 shell.prefix("source ~/.bashrc; ")
 
@@ -161,7 +162,8 @@ rule find_indep_snps:
         rules.merge.output
     output:
         keep=temp(DATA_DIR + "chr{chr}/chr{chr}.maf{maf}.r2{r2}.prune.in"),
-        exclude=temp(expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.maf{{maf}}.r2{{r2}}.{ext}", ext=["log", "nosex", "prune.out"]))
+        exclude=temp(expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.maf{{maf}}.r2{{r2}}.{ext}", 
+                     ext=["log", "nosex", "prune.out"]))
     params:
         out_file=DATA_DIR + "chr{chr}/chr{chr}.maf{maf}.r2{r2}"
     shell:
@@ -187,7 +189,8 @@ rule prune:
 
 rule make_rfmix_input_acro:
     input:
-        vcf=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.maf{maf}.pruned.r2{r2}.vcf.gz", r2=RFMIX_R2, maf=RFMIX_MAF),
+        vcf=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.maf{maf}.pruned.r2{r2}.vcf.gz", 
+                   r2=RFMIX_R2, maf=RFMIX_MAF),
         admix_info=DATA_DIR + ADMIX_METADATA,
         ref_info=REF_DIR + REF_METADATA,
         genetic_map=MAP_DIR + "plink.chr{chr}.GRCh38.map"
@@ -222,7 +225,8 @@ rule make_rfmix_input_acro:
 
 rule make_rfmix_input:
     input:
-        vcf=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.maf{maf}.pruned.r2{r2}.vcf.gz", r2=RFMIX_R2, maf=RFMIX_MAF),
+        vcf=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.maf{maf}.pruned.r2{r2}.vcf.gz", 
+                   r2=RFMIX_R2, maf=RFMIX_MAF),
         admix_info=DATA_DIR + ADMIX_METADATA,
         ref_info=REF_DIR + REF_METADATA,
         genetic_map=MAP_DIR + "plink.chr{chr}.GRCh38.map",
@@ -380,7 +384,8 @@ rule admixture_pop_input:
 
 rule admixture_snp_input:
     input:
-        vcf=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.maf{maf}.pruned.r2{r2}.vcf.gz", r2=ADMIX_R2, maf=ADMIX_MAF)
+        vcf=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.maf{maf}.pruned.r2{r2}.vcf.gz", 
+                   r2=ADMIX_R2, maf=ADMIX_MAF)
     output:
         bed=temp(DATA_DIR + "chr{chr}/chr{chr}.admixture.bed"),
         misc=temp(expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.admixture.{ext}", ext=["bim", "fam"])),
@@ -410,7 +415,8 @@ rule run_admixture:
 rule combine_rfmix_admixture:
     input:
         rfmix=rules.global_inference.output,
-        admix=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.admixture.{n}.Q", n=NPOP, r2=ADMIX_R2),
+        admix=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.admixture.{n}.Q", 
+                     n=NPOP, r2=ADMIX_R2),
         map=DATA_DIR + "chr{chr}/chr{chr}.pop_map.txt"
     output:
         DATA_DIR + "chr{chr}/chr{chr}.combined_global_anc_frac.txt"
@@ -459,7 +465,8 @@ rule merge_phasing:
 
 rule check_phasing:
     input:
-        vcf=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.pruned.{r2}.vcf.gz", r2=RFMIX_R2),
+        vcf=expand(DATA_DIR + "chr{{chr}}/chr{{chr}}.merged.pruned.{r2}.vcf.gz", 
+                   r2=RFMIX_R2),
         phasing=DATA_DIR + "chr{chr}/chr{chr}.allelesRephased0.txt"
     output:
         DATA_DIR + "chr{chr}/chr{chr}.phasing_check.txt"

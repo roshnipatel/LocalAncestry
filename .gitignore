@@ -13,8 +13,9 @@ bin/admixture
 # Ignore temp directory
 tmp/
 
-# Ignore file made by R while plotting
+# Ignore plotting scripts
 Rplots.pdf
+scripts/plotting/ancestry_plots.pdf
 
 # Ignore results directory
 results/
