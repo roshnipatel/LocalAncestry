@@ -15,7 +15,8 @@ tmp/
 
 # Ignore plotting scripts
 Rplots.pdf
-scripts/plotting/ancestry_plots.pdf
+scripts/plotting
+scripts/plotting/*
 
 # Ignore results directory
 results/
